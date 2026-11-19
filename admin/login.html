@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Bhami Craft Boutique</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="login-viewport">
+
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-header-crest">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <h1>Bhami Craft Boutique</h1>
+      <p>Artisan Owner &amp; Administration Portal</p>
+    </div>
+
+    <div class="login-body">
+      <div id="loginErrorBox" class="login-error-box" role="alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="loginErrorMsg">Invalid username or password.</span>
+      </div>
+
+      <form id="adminLoginForm" novalidate autocomplete="off">
+        <div class="login-form-group">
+          <label for="adminUsername">Owner Username</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-user-shield field-icon"></i>
+            <input type="text" id="adminUsername" name="username" placeholder="e.g. admin" required autofocus autocomplete="username">
+          </div>
+        </div>
+
+        <div class="login-form-group">
+          <label for="adminPassword">Master Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-key field-icon"></i>
+            <input type="password" id="adminPassword" name="password" placeholder="Enter owner access key" required autocomplete="current-password">
+            <button type="button" class="toggle-password-btn" id="togglePasswordBtn" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye" id="toggleEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login-submit" id="loginSubmitBtn">
+          <i class="fa-solid fa-lock-open"></i>
+          <span>Sign In to Dashboard</span>
+        </button>
+      </form>
+
+      <div class="login-security-notice">
+        <span><i class="fa-solid fa-shield-halved text-gold"></i> Protected Portal</span>
+        <a href="../"><i class="fa-solid fa-arrow-left"></i> Return to Storefront</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check if already authenticated
+    (async function checkExistingAuth() {
+      const token = sessionStorage.getItem('bhami_admin_token');
+      if (token) {
+        try {
+          const res = await fetch('/api/auth-check', {
+            headers: { 'Authorization': 'Bearer ' + token }
+          });
+          const data = await res.json();
+          if (data && data.authenticated) {
+            window.location.replace('index.html');
+          }
+        } catch (e) {
+          // Token expired or server unreachable, stay on login
+        }
+      }
+    })();
+
+    // Password visibility toggle
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const pwdInput = document.getElementById('adminPassword');
+    const eyeIcon = document.getElementById('toggleEyeIcon');
+    if (toggleBtn && pwdInput && eyeIcon) {
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = pwdInput.type === 'password';
+        pwdInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+      });
+    }
+
+    // Form submission
+    const loginForm = document.getElementById('adminLoginForm');
+    const errorBox = document.getElementById('loginErrorBox');
+    const errorMsg = document.getElementById('loginErrorMsg');
+    const submitBtn = document.getElementById('loginSubmitBtn');
+
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorBox.style.display = 'none';
+
+        const username = document.getElementById('adminUsername').value.trim();
+        const password = document.getElementById('adminPassword').value;
+
+        if (!username || !password) {
+          errorMsg.textContent = 'Please enter both your owner username and password.';
+          errorBox.style.display = 'block';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+
+        try {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success && result.token) {
+            // Save token
+            sessionStorage.setItem('bhami_admin_token', result.token);
+            sessionStorage.setItem('bhami_admin_user', result.username || 'Owner');
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Authorized! Loading...';
+            setTimeout(() => {
+              window.location.replace('index.html');
+            }, 300);
+          } else {
+            errorMsg.textContent = result.error || 'Authentication failed. Please verify your credentials.';
+            errorBox.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Sign In to Dashboard';
+          }
+        } catch (err) {
+          errorMsg.textContent = 'Network or server error. Please ensure the local server is running.';
+          errorBox.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Sign In to Dashboard';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

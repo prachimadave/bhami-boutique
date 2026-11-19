@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artisan Admin Dashboard — Bhami Craft Boutique</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <div class="admin-app">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-logo">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div class="sidebar-brand-text">
+          <h2>Bhami Craft</h2>
+          <span>Owner Admin Portal</span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item">
+          <a href="#dashboard" class="sidebar-link active" data-tab="all">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-gauge-high"></i>
+              <span>All Orders</span>
+            </div>
+            <span class="sidebar-badge" id="sideBadgeAll">0</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#custom-crafts" class="sidebar-link" data-tab="custom">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Custom Crafts</span>
+            </div>
+            <span class="sidebar-badge" id="sideBadgeCustom">0</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#outfit-studio" class="sidebar-link" data-tab="outfit">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-scissors"></i>
+              <span>Outfit Studio</span>
+            </div>
+            <span class="sidebar-badge" id="sideBadgeOutfit">0</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#cart-orders" class="sidebar-link" data-tab="checkout">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-bag-shopping"></i>
+              <span>Direct Purchases</span>
+            </div>
+            <span class="sidebar-badge" id="sideBadgeCheckout">0</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#custom-enquiries" class="sidebar-link" data-tab="enquiries">
+            <div class="sidebar-link-content">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <span>Custom Enquiries</span>
+            </div>
+            <span class="sidebar-badge" id="sideBadgeEnquiries">0</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="owner-profile">
+          <div class="owner-avatar">B</div>
+          <div class="owner-info">
+            <div class="owner-name" id="sidebarOwnerName">Bhami Boutique Owner</div>
+            <div class="owner-role">Master Artisan</div>
+          </div>
+        </div>
+        <div class="sidebar-actions">
+          <a href="../" target="_blank" class="btn-sidebar-store" title="Open storefront website in new tab">
+            <i class="fa-solid fa-store"></i> Store
+          </a>
+          <button type="button" class="btn-sidebar-logout" id="sidebarLogoutBtn" title="Log out from admin dashboard">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">
+            <h1 id="topbarHeaderTitle">Bespoke Orders &amp; Inquiries Dashboard</h1>
+            <p>Live customer orders, personalization specifications &amp; reference photos</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="live-time-indicator">
+            <span class="pulse-dot"></span>
+            <span id="liveClockDisplay">Live Database</span>
+          </div>
+
+          <button type="button" class="btn-topbar-action" id="btnRefreshData" title="Refresh all orders from database">
+            <i class="fa-solid fa-arrows-rotate"></i> Refresh
+          </button>
+
+          <button type="button" class="btn-topbar-action" id="btnExportData" title="Export orders as JSON backup">
+            <i class="fa-solid fa-file-arrow-down"></i> Export
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Body -->
+      <div class="admin-container">
+        <!-- 1. Metrics / Stats Overview Cards -->
+        <section class="metrics-grid" aria-label="Order Metrics">
+          <!-- Total Orders -->
+          <div class="metric-card metric-total">
+            <div class="metric-icon-box">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+            <div class="metric-data">
+              <div class="metric-number" id="statTotalOrders">0</div>
+              <div class="metric-label">Total Orders</div>
+            </div>
+          </div>
+
+          <!-- Pending Orders -->
+          <div class="metric-card metric-pending">
+            <div class="metric-icon-box">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <div class="metric-data">
+              <div class="metric-number" id="statPendingOrders">0</div>
+              <div class="metric-label">Pending Orders</div>
+            </div>
+          </div>
+
+          <!-- Accepted Orders -->
+          <div class="metric-card metric-accepted">
+            <div class="metric-icon-box">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="metric-data">
+              <div class="metric-number" id="statAcceptedOrders">0</div>
+              <div class="metric-label">Accepted Orders</div>
+            </div>
+          </div>
+
+          <!-- Completed Orders -->
+          <div class="metric-card metric-completed">
+            <div class="metric-icon-box">
+              <i class="fa-solid fa-champagne-glasses"></i>
+            </div>
+            <div class="metric-data">
+              <div class="metric-number" id="statCompletedOrders">0</div>
+              <div class="metric-label">Completed Orders</div>
+            </div>
+          </div>
+
+          <!-- New Custom Enquiries -->
+          <div class="metric-card metric-custom">
+            <div class="metric-icon-box">
+              <i class="fa-solid fa-sparkles"></i>
+            </div>
+            <div class="metric-data">
+              <div class="metric-number" id="statCustomEnquiries">0</div>
+              <div class="metric-label">Custom Enquiries</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Orders Panel & Main Management Interface -->
+        <section class="orders-panel">
+          <!-- Toolbar & Search -->
+          <div class="panel-toolbar">
+            <div class="toolbar-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="orderSearchInput" placeholder="Search customer, phone, order ID, product, notes...">
+            </div>
+
+            <div class="toolbar-filters">
+              <label for="orderStatusFilter" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden;">Filter by status</label>
+              <select id="orderStatusFilter" class="filter-select">
+                <option value="all">All Statuses</option>
+                <option value="Pending">Pending / New Inquiry</option>
+                <option value="Accepted">Accepted / Approved</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+
+              <label for="orderSortOrder" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden;">Sort orders</label>
+              <select id="orderSortOrder" class="filter-select">
+                <option value="newest">Sort: Newest First</option>
+                <option value="oldest">Sort: Oldest First</option>
+                <option value="event">Sort: Required Event Date</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Filter Navigation Tabs -->
+          <div class="panel-tabs-bar">
+            <button type="button" class="panel-tab active" data-filter="all">
+              <i class="fa-solid fa-table-list"></i> All Orders
+              <span class="tab-badge" id="tabCountAll">0</span>
+            </button>
+            <button type="button" class="panel-tab" data-filter="custom">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Custom Crafts
+              <span class="tab-badge" id="tabCountCustom">0</span>
+            </button>
+            <button type="button" class="panel-tab" data-filter="outfit">
+              <i class="fa-solid fa-scissors"></i> Outfit Studio
+              <span class="tab-badge" id="tabCountOutfit">0</span>
+            </button>
+            <button type="button" class="panel-tab" data-filter="checkout">
+              <i class="fa-solid fa-bag-shopping"></i> Direct Cart Purchases
+              <span class="tab-badge" id="tabCountCheckout">0</span>
+            </button>
+            <button type="button" class="panel-tab" data-filter="enquiries">
+              <i class="fa-solid fa-envelope"></i> Custom Enquiries &amp; Messages
+              <span class="tab-badge" id="tabCountEnquiries">0</span>
+            </button>
+          </div>
+
+          <!-- Orders Content Container -->
+          <div class="orders-container" id="ordersContainer">
+            <!-- Dynamically populated by admin.js -->
+            <div class="orders-empty-state">
+              <i class="fa-solid fa-inbox"></i>
+              <h3>Loading Customer Orders...</h3>
+              <p>Fetching real-time customer personalization requests from the database.</p>
+            </div>
+          </div>
+
+          <!-- Custom Enquiries & Messages Container (Shown when enquiries tab active) -->
+          <div class="orders-container" id="enquiriesContainer" style="display: none;">
+            <!-- Dynamically populated by admin.js -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div class="admin-lightbox-modal" id="adminLightboxModal" role="dialog" aria-modal="true" aria-label="Reference image enlarged view">
+    <div class="lightbox-dialog">
+      <div class="lightbox-header">
+        <span class="lightbox-title" id="lightboxTitle">Customer Reference Photo</span>
+        <button type="button" class="lightbox-close" id="closeLightboxBtn" aria-label="Close Lightbox">&times;</button>
+      </div>
+      <div class="lightbox-img-stage">
+        <img id="lightboxImg" class="lightbox-stage-img" src="" alt="Customer reference photo">
+      </div>
+      <div class="lightbox-footer">
+        <div class="lightbox-file-meta" id="lightboxMeta">Loading photo details...</div>
+        <button type="button" class="btn-lightbox-download" id="downloadCurrentPhotoBtn">
+          <i class="fa-solid fa-download"></i> Download Photo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="admin-toast-container" id="adminToastContainer" aria-live="polite"></div>
+
+  <!-- Admin Script -->
+  <script src="admin.js"></script>
+</body>
+</html>

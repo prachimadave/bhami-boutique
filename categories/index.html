@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhami Craft Boutique | Handmade with Love, Made for Your Special Moments</title>
+  <meta name="description" content="Authentic Maharashtrian handmade wedding accessories, bespoke Mundavalya, royal Sakharpuda platters, Bashing, custom baby name boards, festive decor, and customized outfits & bridal blouses.">
+  
+  <!-- Google Fonts: Cormorant Garamond, Cinzel, and Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons for polished UI buttons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Boutique Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <!-- Boutique Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Demo Banner Notification -->
+  <aside class="demo-notice-bar" role="region" aria-label="Demo website disclaimer">
+    <div class="container demo-notice-content">
+      <span class="demo-tag"><i class="fa-solid fa-gem"></i> DEMO WEBSITE</span>
+      <p class="demo-text">
+        Sample boutique showcase for <strong>Bhami Craft Boutique</strong>. Orders, custom stitching, payments, and contacts are simulated for demonstration.
+      </p>
+      <button class="demo-notice-dismiss" id="dismissDemoNotice" aria-label="Dismiss demo notice">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Boutique Header & Navigation -->
+  <header class="boutique-header" id="boutiqueHeader">
+    <div class="header-inner container">
+      <!-- Brand Logo / Emblem -->
+      <a href="#home" class="brand-logo" aria-label="Bhami Craft Boutique Home">
+        <div class="brand-emblem">
+          <!-- Traditional Kolhapuri / Peacock inspired motif in SVG -->
+          <svg viewBox="0 0 48 48" class="emblem-svg" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" stroke="#D5AD58" stroke-width="1.8" stroke-dasharray="3 2" />
+            <circle cx="24" cy="24" r="19" fill="#741F2B" stroke="#D5AD58" stroke-width="1.2" />
+            <path d="M24 10C24 10 28 16 28 20C28 22.2091 26.2091 24 24 24C21.7909 24 20 22.2091 20 20C20 16 24 10 24 10Z" fill="#D5AD58"/>
+            <path d="M24 24C24 24 31 27 31 32C31 34.2 29.5 36 27 36C24 36 24 33 24 33C24 33 24 36 21 36C18.5 36 17 34.2 17 32C17 27 24 24 24 24Z" fill="#F5DE88"/>
+            <circle cx="24" cy="18" r="2.2" fill="#741F2B"/>
+            <circle cx="24" cy="30" r="1.8" fill="#741F2B"/>
+          </svg>
+        </div>
+        <div class="brand-identity">
+          <span class="brand-name">BHAMI CRAFT BOUTIQUE</span>
+          <span class="brand-subline">Maharashtrian Traditional Crafts</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="main-nav" id="mainNav" aria-label="Primary Navigation">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="#catalogue" class="nav-link">Catalogue</a></li>
+          <li><a href="#customized-outfits" class="nav-link">Custom Outfits</a></li>
+          <li><a href="#custom-order" class="nav-link">Custom Order</a></li>
+          <li><a href="#about" class="nav-link">Our Story</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Header Action Controls -->
+      <div class="header-actions">
+        <button class="action-btn search-toggle-btn" id="searchToggleBtn" aria-label="Open search filter">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <button class="action-btn wishlist-btn" id="wishlistBtn" aria-label="View favorite items">
+          <i class="fa-regular fa-heart"></i>
+          <span class="badge" id="wishlistCount">0</span>
+        </button>
+
+        <button class="action-btn cart-btn" id="cartToggleBtn" aria-label="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartBadgeCount">0</span>
+        </button>
+
+        <button class="action-btn admin-btn" id="adminDashboardBtn" onclick="window.location.href='../admin/'" aria-label="Open Artisan Admin Dashboard" title="Artisan Admin Orders Dashboard">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <span class="admin-badge" id="adminBadgeCount">0</span>
+        </button>
+
+        <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Search Dropdown Bar -->
+    <div class="quick-search-drawer" id="quickSearchDrawer">
+      <div class="container quick-search-inner">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="quickSearchInput" placeholder="Search Mundavalya, Sakharpuda trays, Kurtis, Blouses, Toran..." aria-label="Search products">
+          <button class="search-clear-btn" id="clearQuickSearch" aria-label="Clear search">&times;</button>
+        </div>
+        <div class="quick-search-tags">
+          <span class="tags-label">Popular:</span>
+          <button class="search-tag" data-search="Mundavalya">Mundavalya</button>
+          <button class="search-tag" data-search="Ring Platter">Ring Platter</button>
+          <button class="search-tag" data-search="Embroidery Frame">Embroidery Frame</button>
+          <button class="search-tag" data-search="Sakharpuda">Sakharpuda</button>
+          <button class="search-tag" data-search="Outfits">Custom Outfits</button>
+          <button class="search-tag" data-search="Blouse">Blouses</button>
+          <button class="search-tag" data-search="Bashing">Bashing</button>
+          <button class="search-tag" data-search="Baby Name">Baby Reveal</button>
+          <button class="search-tag" data-search="Toran">Toran</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu Navigation -->
+  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="Mobile Navigation">
+    <div class="drawer-header">
+      <div class="brand-identity">
+        <span class="brand-name">BHAMI CRAFT BOUTIQUE</span>
+        <span class="brand-subline">Handmade with Love</span>
+      </div>
+      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <ul class="mobile-nav-list">
+        <li><a href="#home" class="mobile-nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="#categories" class="mobile-nav-link"><i class="fa-solid fa-shapes"></i> Categories</a></li>
+        <li><a href="#catalogue" class="mobile-nav-link"><i class="fa-solid fa-store"></i> Shop Catalogue</a></li>
+        <li><a href="#customized-outfits" class="mobile-nav-link"><i class="fa-solid fa-scissors"></i> Customized Outfits</a></li>
+        <li><a href="#custom-order" class="mobile-nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> Custom Order</a></li>
+        <li><a href="#about" class="mobile-nav-link"><i class="fa-solid fa-feather-pointed"></i> Our Story</a></li>
+        <li><a href="#faq" class="mobile-nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+        <li><a href="#contact" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+        <li><a href="#" class="mobile-nav-link" id="mobileAdminLink" href="../admin/"><i class="fa-solid fa-clipboard-check text-gold"></i> Admin Dashboard <span class="badge" id="mobileAdminBadgeCount">0</span></a></li>
+      </ul>
+      <div class="drawer-footer">
+        <p class="drawer-phone"><i class="fa-brands fa-whatsapp"></i> +91 98XXX XXXXX (Demo)</p>
+        <p class="drawer-tagline">“Handmade with Love, Made for Your Special Moments.”</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Page Content -->
+  <main id="mainContent">
+
+    <!-- 1. HOME / HERO SECTION -->
+    <section class="hero-section" id="home">
+      <!-- Decorative Paithani Pallu / Mandala Accents -->
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-gold-glow"></div>
+      
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-pill-badge">
+            <span class="sparkle">✨</span>
+            <span>Handcrafted Maharashtrian Heritage</span>
+          </div>
+          
+          <h1 class="hero-title">
+            Handmade with Love, <br>
+            <span class="gold-gradient-text">Made for Your Special Moments.</span>
+          </h1>
+          
+          <p class="hero-description">
+            Celebrate life’s most auspicious milestones with bespoke <strong>Mundavalya</strong>, royal <strong>Sakharpuda thalis</strong>, authentic <strong>Bashing</strong>, customized baby reveal boards, and bespoke <strong>Customized Outfits & Bridal Blouses</strong> handcrafted in Maharashtra.
+          </p>
+
+          <div class="hero-action-group">
+            <a href="#catalogue" class="btn btn-gold btn-lg">
+              <i class="fa-solid fa-bag-shopping"></i> Shop Now
+            </a>
+            <a href="#customized-outfits" class="btn btn-outline-light btn-lg">
+              <i class="fa-solid fa-scissors"></i> Customize Outfits
+            </a>
+          </div>
+
+          <!-- Quick Trust Badges -->
+          <div class="hero-trust-grid">
+            <div class="trust-item">
+              <i class="fa-solid fa-hands-holding-circle"></i>
+              <div>
+                <strong>100% Handcrafted</strong>
+                <span>Preserving artisan traditions</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <i class="fa-solid fa-palette"></i>
+              <div>
+                <strong>Bespoke Couture</strong>
+                <span>Personalized names & sizes</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <i class="fa-solid fa-box-open"></i>
+              <div>
+                <strong>Safe Delivery</strong>
+                <span>Pan-India transit packing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card-stack">
+            <div class="hero-main-card">
+              <img src="images/bhami-pearl-chain-mundavalya.jpg" alt="Handcrafted Pearl & Kundan Maharashtrian Mundavalya by Bhami Craft Boutique" class="hero-img">
+              <div class="hero-card-tag">
+                <span class="tag-title">Classic Basra Mundavalya</span>
+                <span class="tag-price">₹999 <del>₹1,299</del></span>
+              </div>
+            </div>
+            <!-- Floating accent cards -->
+            <div class="floating-accent-card float-left">
+              <div class="accent-icon"><i class="fa-solid fa-ring"></i></div>
+              <div class="accent-text">
+                <span class="accent-title">Sakharpuda Collection</span>
+                <span class="accent-sub">Velvet Ring Platters</span>
+              </div>
+            </div>
+            <div class="floating-accent-card float-right">
+              <div class="accent-icon"><i class="fa-solid fa-scissors"></i></div>
+              <div class="accent-text">
+                <span class="accent-title">Customized Outfits</span>
+                <span class="accent-sub">Kurtis & Bridal Blouses</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Traditional Scalloped Border Divider -->
+      <div class="traditional-divider">
+        <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+          <path d="M0,0 C150,30 350,-15 500,20 C650,40 850,-10 1000,25 C1100,35 1170,10 1200,0 L1200,40 L0,40 Z" fill="#FFF8EF"></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2. PRODUCT CATEGORIES SECTION (12 CATEGORIES) -->
+    <section class="section categories-section" id="categories">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Auspicious Collections</div>
+          <h2 class="section-title">Explore by Tradition</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-sun"></i>
+            <span></span>
+          </div>
+          <p class="section-subtitle">
+            Explore authentic creations thoughtfully handmade for Sakharpuda, Lagna, Barse, festive celebrations, and bespoke bridal tailoring.
+          </p>
+        </div>
+
+        <div class="categories-grid" id="categoriesGrid">
+          <!-- Category 1: Mundavalya -->
+          <div class="category-card" data-category="Mundavalya">
+            <div class="category-img-wrap">
+              <img src="images/bhami-pearl-chain-mundavalya.jpg" alt="Mundavalya Category - Bhami Craft Boutique" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Mundavalya">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Mundavalya</h3>
+              <p class="category-desc">Bridal & groom forehead pearls adorned with kundan, red crystals & zari cords.</p>
+              <span class="category-count">3 Handcrafted Designs</span>
+            </div>
+          </div>
+
+          <!-- Category 2: Sakharpuda Collection -->
+          <div class="category-card" data-category="Sakharpuda Collection">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="Sakharpuda Collection" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Sakharpuda Collection">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Sakharpuda Collection</h3>
+              <p class="category-desc">Velvet engagement platters, mor-pankh ring boxes & trousseau packing trays.</p>
+              <span class="category-count">3 Luxury Sets</span>
+            </div>
+          </div>
+
+          <!-- Category 3: Oti Chi Potli -->
+          <div class="category-card" data-category="Oti Chi Potli">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=600&q=80" alt="Oti Chi Potli" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Oti Chi Potli">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Oti Chi Potli</h3>
+              <p class="category-desc">Sacred brocade, raw silk & Paithani border pouches for Suhasini blessings.</p>
+              <span class="category-count">3 Auspicious Styles</span>
+            </div>
+          </div>
+
+          <!-- Category 4: Bashing -->
+          <div class="category-card" data-category="Bashing">
+            <div class="category-img-wrap">
+              <img src="images/bhami-bridal-mundavalya.jpg" alt="Bashing Category - Bhami Craft Boutique" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Bashing">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Bashing</h3>
+              <p class="category-desc">Traditional Solapuri & royal velvet wedding mukut headgear for groom and bride.</p>
+              <span class="category-count">3 Royal Variations</span>
+            </div>
+          </div>
+
+          <!-- Category 5: Baby Name Reveal Boards -->
+          <div class="category-card" data-category="Baby Name Reveal Boards">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80" alt="Baby Name Reveal Boards" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Baby Name Reveal Boards">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Baby Name Reveal Boards</h3>
+              <p class="category-desc">Wooden & acrylic boards customized with baby's name for Namkaran / Barse.</p>
+              <span class="category-count">3 Keepsake Styles</span>
+            </div>
+          </div>
+
+          <!-- Category 6: Customized Name Banners -->
+          <div class="category-card" data-category="Customized Name Banners">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=600&q=80" alt="Customized Name Banners" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Customized Name Banners">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Customized Name Banners</h3>
+              <p class="category-desc">Wedding entrance plaques, couple name buntings & Griha Pravesh boards.</p>
+              <span class="category-count">3 Bespoke Banners</span>
+            </div>
+          </div>
+
+          <!-- Category 7: Handmade Bangles -->
+          <div class="category-card" data-category="Handmade Bangles">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=600&q=80" alt="Handmade Bangles" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Handmade Bangles">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Handmade Bangles</h3>
+              <p class="category-desc">Green glass Maharashtrian chuda sets, silk thread kadas & pearl tode sets.</p>
+              <span class="category-count">3 Traditional Sets</span>
+            </div>
+          </div>
+
+          <!-- Category 8: Traditional Decorations and Toran -->
+          <div class="category-card" data-category="Traditional Decorations and Toran">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1609137144822-473d09a0684f?auto=format&fit=crop&w=600&q=80" alt="Traditional Decorations and Toran" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Traditional Decorations and Toran">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Traditional Toran & Decor</h3>
+              <p class="category-desc">Marigold floral door torans, shola wood lotuses & brass bell door hangings.</p>
+              <span class="category-count">3 Festive Decors</span>
+            </div>
+          </div>
+
+          <!-- Category 9: Customized Outfits -->
+          <div class="category-card" data-category="Customized Outfits">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" alt="Customized Outfits Category" class="category-img">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Customized Outfits">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Customized Outfits</h3>
+              <p class="category-desc">Customized kurtis, designer Paithani bridal blouses, traditional ethnic ensembles & custom stitching.</p>
+              <span class="category-count">4 Bespoke Styles</span>
+            </div>
+          </div>
+
+          <!-- Category 10: Customized Blouses -->
+          <div class="category-card" data-category="Customized Blouses">
+            <div class="category-img-wrap">
+              <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" alt="Customized Blouses Category" class="category-img" loading="lazy">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Customized Blouses">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Customized Blouses</h3>
+              <p class="category-desc">Designer bridal blouses, Yeola Paithani peacock borders, Maggam & zardozi work stitched to your fit.</p>
+              <span class="category-count">3 Couture Styles</span>
+            </div>
+          </div>
+
+          <!-- Category 11: Ring Platter -->
+          <div class="category-card" data-category="Ring Platter">
+            <div class="category-img-wrap">
+              <img src="images/bhami-ring-platter-peacock-blue.jpg" alt="Ring Platter Category - Bhami Craft Boutique" class="category-img" loading="lazy">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Ring Platter">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Ring Platter</h3>
+              <p class="category-desc">Handcrafted peacock feather platters, floating glass globes, geode resin trays & personalized couple ring arches.</p>
+              <span class="category-count">5 Handcrafted Platters</span>
+            </div>
+          </div>
+
+          <!-- Category 12: Embroidery Frame -->
+          <div class="category-card" data-category="Embroidery Frame">
+            <div class="category-img-wrap">
+              <img src="images/bhami-embroidery-marathi-paithani.jpg" alt="Embroidery Frame Category - Bhami Craft Boutique" class="category-img" loading="lazy">
+              <div class="category-overlay">
+                <button class="btn btn-sm btn-gold filter-category-btn" data-category="Embroidery Frame">View Items</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Embroidery Frame</h3>
+              <p class="category-desc">Hand-embroidered wedding calendar hoops, 3D Paithani Nauvari silhouettes, bridal lehengas & keepsake hoops.</p>
+              <span class="category-count">5 Bespoke Hoops</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PRODUCT CATALOGUE SECTION (SEARCH, FILTERS, PRODUCT CARDS) -->
+    <section class="section catalogue-section" id="catalogue">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Handpicked Treasures</div>
+          <h2 class="section-title">Our Boutique Catalogue</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-gem"></i>
+            <span></span>
+          </div>
+          <p class="section-subtitle">
+            Every piece is created with love, intricate details, and heartfelt devotion to authentic customs.
+          </p>
+        </div>
+
+        <!-- Catalogue Control Toolbar -->
+        <div class="catalogue-controls-wrapper">
+          <!-- Search Box -->
+          <div class="catalogue-search-bar">
+            <i class="fa-solid fa-magnifying-glass search-ico"></i>
+            <input type="text" id="catalogueSearchInput" placeholder="Search by name, category, or occasion..." aria-label="Search catalogue">
+            <button class="clear-search-btn" id="clearCatalogueSearch" style="display:none;" aria-label="Clear catalogue search">&times;</button>
+          </div>
+
+          <!-- Sort and Results Count -->
+          <div class="catalogue-sorting">
+            <span class="results-count" id="resultsCount">Showing 34 products</span>
+            <div class="select-wrapper">
+              <label for="sortBySelect" class="sr-only">Sort By</label>
+              <select id="sortBySelect" class="form-select">
+                <option value="featured">Sort: Featured Collection</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="rating-high">Customer Rating</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Filter Buttons / Horizontal Scrollable Pills -->
+        <div class="category-filter-pills" id="categoryFilterPills" role="tablist" aria-label="Filter products by category">
+          <button class="filter-pill active" data-filter="all" role="tab" aria-selected="true">All Items (41)</button>
+          <button class="filter-pill" data-filter="Ring Platter" role="tab" aria-selected="false">Ring Platter</button>
+          <button class="filter-pill" data-filter="Embroidery Frame" role="tab" aria-selected="false">Embroidery Frame</button>
+          <button class="filter-pill" data-filter="Customized Outfits" role="tab" aria-selected="false">Customized Outfits</button>
+          <button class="filter-pill" data-filter="Customized Blouses" role="tab" aria-selected="false">Customized Blouses</button>
+          <button class="filter-pill" data-filter="Mundavalya" role="tab" aria-selected="false">Mundavalya</button>
+          <button class="filter-pill" data-filter="Sakharpuda Collection" role="tab" aria-selected="false">Sakharpuda Collection</button>
+          <button class="filter-pill" data-filter="Oti Chi Potli" role="tab" aria-selected="false">Oti Chi Potli</button>
+          <button class="filter-pill" data-filter="Bashing" role="tab" aria-selected="false">Bashing</button>
+          <button class="filter-pill" data-filter="Baby Name Reveal Boards" data-filter-name="Baby Name Reveal Boards" role="tab" aria-selected="false">Baby Reveal Boards</button>
+          <button class="filter-pill" data-filter="Customized Name Banners" role="tab" aria-selected="false">Name Banners</button>
+          <button class="filter-pill" data-filter="Handmade Bangles" role="tab" aria-selected="false">Handmade Bangles</button>
+          <button class="filter-pill" data-filter="Traditional Decorations and Toran" role="tab" aria-selected="false">Toran & Decor</button>
+        </div>
+
+        <!-- Active Filter Tags Display -->
+        <div class="active-filter-indicator" id="activeFilterIndicator" style="display: none;">
+          <span>Filtering by: <strong id="currentFilterText">Category</strong></span>
+          <button id="resetAllFiltersBtn" class="reset-filter-btn"><i class="fa-solid fa-rotate-left"></i> Reset Filter</button>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div class="products-grid" id="productsGrid" aria-live="polite">
+          <!-- Dynamically populated via script.js -->
+        </div>
+
+        <!-- Empty State (When no search matches) -->
+        <div class="no-products-state" id="noProductsState" style="display: none;">
+          <div class="empty-icon"><i class="fa-solid fa-feather"></i></div>
+          <h3>No Handcrafted Items Found</h3>
+          <p>We couldn't find any products matching your search criteria. Try a different keyword or reset the category filter.</p>
+          <button class="btn btn-gold" id="emptyResetBtn"><i class="fa-solid fa-rotate-left"></i> View All Products</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CUSTOMIZED OUTFITS SECTION & BESPOKE TAILORING STUDIO -->
+    <section class="section outfits-section" id="customized-outfits">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Bespoke Couture & Tailoring</div>
+          <h2 class="section-title">Customized Outfits</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-scissors"></i>
+            <span></span>
+          </div>
+          <p class="section-subtitle">
+            Tailored to perfection for your sacred celebrations. Choose from customized kurtis, royal bridal blouses, traditional Maharashtrian ethnic ensembles, or order custom stitching with your own measurements.
+          </p>
+        </div>
+
+        <!-- Sample Outfit Showcase Cards -->
+        <div class="outfit-showcase-grid">
+          <!-- Outfit Card 1: Customized Kurtis -->
+          <div class="outfit-card">
+            <div class="outfit-badge-tag">Starting from ₹1,850 (Demo Price)</div>
+            <div class="outfit-card-media">
+              <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80" alt="Paithani Motif Pure Silk Kurti" class="outfit-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=700&q=80';">
+              <div class="outfit-overlay-tag">Custom Cut & Tailored</div>
+            </div>
+            <div class="outfit-card-body">
+              <span class="outfit-cat-label">Customized Kurtis</span>
+              <h3 class="outfit-title">Paithani Motif Pure Silk Kurti</h3>
+              <p class="outfit-desc">Bespoke straight or A-line silk kurti accented with woven Paithani peacock motifs, zari cuffs, and customizable necklines.</p>
+              <ul class="outfit-highlights">
+                <li><i class="fa-solid fa-check"></i> Pure Cotton Soft Lining Included</li>
+                <li><i class="fa-solid fa-check"></i> Standard Sizes (XS–XXL) or Custom Measurements</li>
+                <li><i class="fa-solid fa-check"></i> Choice of Sweetheart, V-Neck, or Boat Neck</li>
+              </ul>
+              <div class="outfit-footer">
+                <div class="outfit-price-box">
+                  <span class="price-from">From</span>
+                  <span class="price-val">₹1,850</span>
+                  <span class="price-demo-tag">Demo Price</span>
+                </div>
+                <button class="btn btn-gold btn-sm trigger-outfit-customise" data-outfit="Customized Kurtis">
+                  <i class="fa-solid fa-scissors"></i> Customize Your Outfit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Outfit Card 2: Designer Blouses -->
+          <div class="outfit-card">
+            <div class="outfit-badge-tag">Starting from ₹2,450 (Demo Price)</div>
+            <div class="outfit-card-media">
+              <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=700&q=80" alt="Royal Bridal Zardozi Silk Blouse" class="outfit-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80';">
+              <div class="outfit-overlay-tag">Hand Embroidered</div>
+            </div>
+            <div class="outfit-card-body">
+              <span class="outfit-cat-label">Bridal Blouses</span>
+              <h3 class="outfit-title">Royal Bridal Zardozi Silk Blouse</h3>
+              <p class="outfit-desc">Exquisite hand-stitched bridal blouse featuring Parijaat & peacock zardozi embroidery, padded cups, and dangling latkan tassels.</p>
+              <ul class="outfit-highlights">
+                <li><i class="fa-solid fa-check"></i> Built-in Padded Cups & 2-inch Margin</li>
+                <li><i class="fa-solid fa-check"></i> Deep U Back with Auspicious Latkan Dori</li>
+                <li><i class="fa-solid fa-check"></i> Authentic Yeola Zari Sleeve Borders</li>
+              </ul>
+              <div class="outfit-footer">
+                <div class="outfit-price-box">
+                  <span class="price-from">From</span>
+                  <span class="price-val">₹2,450</span>
+                  <span class="price-demo-tag">Demo Price</span>
+                </div>
+                <button class="btn btn-gold btn-sm trigger-outfit-customise" data-outfit="Blouses">
+                  <i class="fa-solid fa-scissors"></i> Customize Your Outfit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Outfit Card 3: Traditional Ethnic Outfits -->
+          <div class="outfit-card">
+            <div class="outfit-badge-tag">Starting from ₹4,999 (Demo Price)</div>
+            <div class="outfit-card-media">
+              <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=700&q=80" alt="Traditional Ethnic Outfit" class="outfit-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80';">
+              <div class="outfit-overlay-tag">Complete Ensemble</div>
+            </div>
+            <div class="outfit-card-body">
+              <span class="outfit-cat-label">Traditional Ethnic Outfits</span>
+              <h3 class="outfit-title">Traditional Nauvari & Paithani Ensemble</h3>
+              <p class="outfit-desc">Pre-stitched authentic Maharashtrian 9-yard Nauvari look paired with contrasting embroidered jacket blouse and matching shela.</p>
+              <ul class="outfit-highlights">
+                <li><i class="fa-solid fa-check"></i> Easy-to-Wear Pre-Pleated Nauvari Draping</li>
+                <li><i class="fa-solid fa-check"></i> Coordinated Zari Blouse & Shawl (Shela)</li>
+                <li><i class="fa-solid fa-check"></i> Handcrafted for Lagna, Barse & Festive Pujas</li>
+              </ul>
+              <div class="outfit-footer">
+                <div class="outfit-price-box">
+                  <span class="price-from">From</span>
+                  <span class="price-val">₹4,999</span>
+                  <span class="price-demo-tag">Demo Price</span>
+                </div>
+                <button class="btn btn-gold btn-sm trigger-outfit-customise" data-outfit="Traditional ethnic outfits">
+                  <i class="fa-solid fa-scissors"></i> Customize Your Outfit
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Outfit Card 4: Custom Stitching Orders -->
+          <div class="outfit-card">
+            <div class="outfit-badge-tag">Starting from ₹1,200 (Demo Price)</div>
+            <div class="outfit-card-media">
+              <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80" alt="Festive Kurta Set & Custom Stitching" class="outfit-img" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=700&q=80';">
+              <div class="outfit-overlay-tag">Stitched to Measure</div>
+            </div>
+            <div class="outfit-card-body">
+              <span class="outfit-cat-label">Custom Stitching Orders</span>
+              <h3 class="outfit-title">Festive Kurta Set & Custom Stitching</h3>
+              <p class="outfit-desc">Bespoke tailoring services for your own fabrics or tailored kurta-dupatta coordinates with hand-piped borders and custom fittings.</p>
+              <ul class="outfit-highlights">
+                <li><i class="fa-solid fa-check"></i> Bring Your Own Fabric Option</li>
+                <li><i class="fa-solid fa-check"></i> Exact Measurement Custom Cut & Sewing</li>
+                <li><i class="fa-solid fa-check"></i> Finishing with Interlock & Seam Allowances</li>
+              </ul>
+              <div class="outfit-footer">
+                <div class="outfit-price-box">
+                  <span class="price-from">From</span>
+                  <span class="price-val">₹1,200</span>
+                  <span class="price-demo-tag">Demo Price</span>
+                </div>
+                <button class="btn btn-gold btn-sm trigger-outfit-customise" data-outfit="Custom stitching orders">
+                  <i class="fa-solid fa-scissors"></i> Customize Your Outfit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OUTFIT CUSTOMIZATION STUDIO BUILDER -->
+        <div class="outfit-customization-studio" id="outfitCustomizationStudio">
+          <div class="studio-header">
+            <div class="studio-header-icon">
+              <i class="fa-solid fa-scissors"></i>
+            </div>
+            <div>
+              <h3>Bespoke Outfit Customization Studio</h3>
+              <p>Configure your outfit type, size or measurements, neckline, sleeves, and fabric preference. You may also upload an optional reference design photo.</p>
+            </div>
+          </div>
+
+          <div class="studio-layout">
+            <!-- Form Side -->
+            <div class="studio-form-card">
+              <form id="outfitCustomizationForm" novalidate>
+                <!-- Customer Details -->
+                <div class="form-row">
+                  <div class="form-group col-half">
+                    <label for="outfitCustName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="outfitCustName" class="form-input" placeholder="e.g. Sayali Kulkarni" required>
+                    <span class="field-error" id="outfitCustNameError">Please enter your name.</span>
+                  </div>
+                  <div class="form-group col-half">
+                    <label for="outfitCustPhone">WhatsApp / Mobile Number <span class="required">*</span></label>
+                    <input type="tel" id="outfitCustPhone" class="form-input" placeholder="e.g. 98220 XXXXX" required>
+                    <span class="field-error" id="outfitCustPhoneError">Please enter a valid 10-digit number.</span>
+                  </div>
+                </div>
+
+                <!-- 1. Outfit Type Selection -->
+                <div class="form-row">
+                  <div class="form-group col-half">
+                    <label for="outfitTypeSelect">Outfit Type <span class="required">*</span></label>
+                    <select id="outfitTypeSelect" class="form-select" required>
+                      <option value="" disabled selected>-- Select Outfit Type --</option>
+                      <option value="Customized Kurtis">Customized Kurtis (Straight / A-Line / Anarkali)</option>
+                      <option value="Customized Blouses">Customized Blouses (Paithani / Zardozi / Maggam Work)</option>
+                      <option value="Traditional ethnic outfits">Traditional Ethnic Outfit (Nauvari / Lehenga Set)</option>
+                      <option value="Custom stitching orders">Custom Stitching Order (Bring Your Own Fabric / Stitch to Measure)</option>
+                    </select>
+                    <span class="field-error" id="outfitTypeError">Please select an outfit type.</span>
+                  </div>
+
+                  <div class="form-group col-half">
+                    <label for="outfitDeliveryCity">Delivery City / Pin Code <span class="required">*</span></label>
+                    <input type="text" id="outfitDeliveryCity" class="form-input" placeholder="e.g. Pune, 411004" required>
+                    <span class="field-error" id="outfitCityError">Please enter city & pincode.</span>
+                  </div>
+                </div>
+
+                <!-- 2. Size Selection (Standard Sizes or Custom Measurements) -->
+                <div class="form-group">
+                  <label>Size Selection <span class="required">*</span></label>
+                  <div class="outfit-size-pills" id="outfitSizePills">
+                    <label class="size-pill"><input type="radio" name="outfitSize" value="XS (Bust 34)"><span>XS (34)</span></label>
+                    <label class="size-pill"><input type="radio" name="outfitSize" value="S (Bust 36)"><span>S (36)</span></label>
+                    <label class="size-pill active"><input type="radio" name="outfitSize" value="M (Bust 38)" checked><span>M (38)</span></label>
+                    <label class="size-pill"><input type="radio" name="outfitSize" value="L (Bust 40)"><span>L (40)</span></label>
+                    <label class="size-pill"><input type="radio" name="outfitSize" value="XL (Bust 42)"><span>XL (42)</span></label>
+                    <label class="size-pill"><input type="radio" name="outfitSize" value="XXL (Bust 44)"><span>XXL (44)</span></label>
+                    <label class="size-pill custom-measure-pill"><input type="radio" name="outfitSize" value="Custom Measurements"><span><i class="fa-solid fa-tape"></i> Custom Measurements</span></label>
+                  </div>
+
+                  <!-- Dynamic Custom Measurements Panel (Opens when Custom Measurements selected) -->
+                  <div class="custom-measurements-panel" id="customMeasurementsPanel" style="display: none;">
+                    <div class="measurements-header">
+                      <i class="fa-solid fa-ruler-combined"></i>
+                      <span>Enter Your Exact Measurements (in inches)</span>
+                    </div>
+                    <div class="measurements-grid">
+                      <div class="meas-field">
+                        <label for="measBust">Bust / Chest (in)</label>
+                        <input type="number" id="measBust" class="form-input" placeholder="e.g. 36" min="26" max="60" step="0.5">
+                      </div>
+                      <div class="meas-field">
+                        <label for="measWaist">Waist (in)</label>
+                        <input type="number" id="measWaist" class="form-input" placeholder="e.g. 30" min="22" max="55" step="0.5">
+                      </div>
+                      <div class="meas-field">
+                        <label for="measHip">Hip (in)</label>
+                        <input type="number" id="measHip" class="form-input" placeholder="e.g. 39" min="26" max="65" step="0.5">
+                      </div>
+                      <div class="meas-field">
+                        <label for="measLength">Outfit Length (in)</label>
+                        <input type="number" id="measLength" class="form-input" placeholder="e.g. 44 (Kurti) / 14 (Blouse)" min="10" max="65" step="0.5">
+                      </div>
+                      <div class="meas-field">
+                        <label for="measShoulder">Shoulder Width (in)</label>
+                        <input type="number" id="measShoulder" class="form-input" placeholder="e.g. 14.5" min="10" max="24" step="0.5">
+                      </div>
+                      <div class="meas-field">
+                        <label for="measArmhole">Armhole / Sleeve (in)</label>
+                        <input type="number" id="measArmhole" class="form-input" placeholder="e.g. 16" min="8" max="30" step="0.5">
+                      </div>
+                    </div>
+                    <span class="field-hint"><i class="fa-solid fa-circle-info"></i> All custom stitched garments include 2 inches of inner allowance for future alterations.</span>
+                  </div>
+                </div>
+
+                <!-- 4. Neck Design & 5. Sleeve Design -->
+                <div class="form-row">
+                  <div class="form-group col-half">
+                    <label for="outfitNeckDesign">Neck Design <span class="required">*</span></label>
+                    <select id="outfitNeckDesign" class="form-select" required>
+                      <option value="Sweetheart Neck with Pearl Beading" selected>Sweetheart Neck with Pearl Beading</option>
+                      <option value="Traditional Paithani V-Neck with Peacock Border">Traditional Paithani V-Neck with Peacock Border</option>
+                      <option value="Deep U-Neck with Dori & Latkan Tassels">Deep U-Neck with Dori & Latkan Tassels</option>
+                      <option value="Boat Neck with Gold Zari Piping">Boat Neck with Gold Zari Piping</option>
+                      <option value="High Collar / Mandarin Neck with Keyhole">High Collar / Mandarin Neck with Keyhole</option>
+                      <option value="Classic Square Cut Neckline">Classic Square Cut Neckline</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-half">
+                    <label for="outfitSleeveDesign">Sleeve Design <span class="required">*</span></label>
+                    <select id="outfitSleeveDesign" class="form-select" required>
+                      <option value="Elbow Length with Paithani Zari Border" selected>Elbow Length with Paithani Zari Border</option>
+                      <option value="3/4th Sleeves with Hand-Embroidered Cuffs">3/4th Sleeves with Hand-Embroidered Cuffs</option>
+                      <option value="Cap Sleeves with Scalloped Gota Lace">Cap Sleeves with Scalloped Gota Lace</option>
+                      <option value="Full Bell Sleeves with Floral Bootis">Full Bell Sleeves with Floral Bootis</option>
+                      <option value="Sleeveless with Bias Satin Piping">Sleeveless with Bias Satin Piping</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- 6. Fabric Preference -->
+                <div class="form-group">
+                  <label for="outfitFabricSelect">Fabric Preference <span class="required">*</span></label>
+                  <select id="outfitFabricSelect" class="form-select" required>
+                    <option value="Pure Yeola Paithani Silk with Zari" selected>Pure Yeola Paithani Silk with Zari</option>
+                    <option value="Handloom Chanderi Brocade with Soft Cotton Lining">Handloom Chanderi Brocade with Soft Cotton Lining</option>
+                    <option value="Raw Silk / Tussar Silk">Raw Silk / Tussar Silk</option>
+                    <option value="Pure Georgette with Zari Motifs">Pure Georgette with Zari Motifs</option>
+                    <option value="Fine Cotton Silk (Breathable Festive Wear)">Fine Cotton Silk (Breathable Festive Wear)</option>
+                    <option value="Customer Provided Fabric (Custom Stitching Only)">Customer Provided Fabric (Custom Stitching Only)</option>
+                  </select>
+                </div>
+
+                <!-- 7. Optional Reference Design Image Upload -->
+                <div class="form-group">
+                  <label>Optional Reference Design Image (Photo / Sketch / Pinterest)</label>
+                  <div class="outfit-file-upload-box" id="outfitUploadBox">
+                    <input type="file" id="outfitRefImageInput" accept="image/*" class="sr-only">
+                    <div class="upload-drop-content" id="uploadDropContent">
+                      <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                      <p><strong>Click to browse</strong> or drag & drop a reference outfit design</p>
+                      <span>Supports PNG, JPG, WEBP (Max 5MB) • Demo preview only</span>
+                    </div>
+
+                    <!-- Client-side Thumbnail Preview -->
+                    <div class="upload-preview-wrapper" id="uploadPreviewWrapper" style="display: none;">
+                      <img id="uploadImgThumb" src="" alt="Reference Outfit Design Preview" class="upload-thumb">
+                      <div class="upload-file-info">
+                        <strong id="uploadFileName">design-reference.jpg</strong>
+                        <span id="uploadFileSize">240 KB</span>
+                        <button type="button" class="btn-remove-upload" id="removeUploadBtn">
+                          <i class="fa-solid fa-trash-can"></i> Remove Reference
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="field-hint"><i class="fa-solid fa-shield-halved"></i> Demonstration safety: Uploaded reference photos are previewed locally in your browser and not sent to any external server.</span>
+                </div>
+
+                <!-- 8. Additional Instructions -->
+                <div class="form-group">
+                  <label for="outfitInstructions">Additional Instructions & Tailoring Notes</label>
+                  <textarea id="outfitInstructions" class="form-textarea" rows="3" placeholder="Tell our master tailors about specific margin preferences, built-in pads, side zip vs back hooks, matching dupatta border notes, or event deadline..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold btn-lg btn-block" id="submitOutfitFormBtn">
+                    <i class="fa-solid fa-scissors"></i> Submit Outfit Customization Request (Demo)
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Right Side: Live Outfit Customization Preview -->
+            <div class="studio-preview-card">
+              <div class="preview-card-header">
+                <i class="fa-solid fa-vest text-gold"></i>
+                <div>
+                  <h4>Live Custom Outfit Specimen</h4>
+                  <span>Real-time configuration summary</span>
+                </div>
+              </div>
+
+              <div class="outfit-live-plate">
+                <div class="plate-top-decor">✤ MAHARASHTRIAN COUTURE ✤</div>
+                <div class="outfit-preview-title" id="outfitPreviewTitle">Paithani Motif Silk Kurti</div>
+                <div class="outfit-preview-type" id="outfitPreviewType">Category: Customized Kurtis</div>
+
+                <div class="outfit-preview-specs">
+                  <div class="spec-row">
+                    <span class="s-label">Size / Fit:</span>
+                    <span class="s-val" id="outfitPreviewFit">Standard M (Bust 38)</span>
+                  </div>
+                  <div class="spec-row">
+                    <span class="s-label">Neck Design:</span>
+                    <span class="s-val" id="outfitPreviewNeck">Sweetheart Neck with Pearl Beading</span>
+                  </div>
+                  <div class="spec-row">
+                    <span class="s-label">Sleeve Style:</span>
+                    <span class="s-val" id="outfitPreviewSleeve">Elbow Length with Paithani Zari Border</span>
+                  </div>
+                  <div class="spec-row">
+                    <span class="s-label">Fabric:</span>
+                    <span class="s-val" id="outfitPreviewFabric">Pure Yeola Paithani Silk with Zari</span>
+                  </div>
+                  <div class="spec-row" id="outfitRefPreviewRow" style="display: none;">
+                    <span class="s-label">Reference:</span>
+                    <span class="s-val text-success"><i class="fa-solid fa-image"></i> Reference Photo Attached</span>
+                  </div>
+                </div>
+
+                <!-- Mini Reference Preview Box if file attached -->
+                <div class="outfit-preview-thumb-box" id="outfitPreviewThumbBox" style="display: none;">
+                  <img id="outfitPreviewThumbImg" src="" alt="Reference thumbnail" class="outfit-preview-thumb">
+                  <span>Attached Reference Photo</span>
+                </div>
+
+                <div class="plate-bottom-decor">~ Hand-Tailored with Love in Maharashtra ~</div>
+              </div>
+
+              <!-- Tailoring Assurance Box -->
+              <div class="tailoring-assurance-card">
+                <h5><i class="fa-solid fa-award text-gold"></i> The Bhami Boutique Tailoring Promise</h5>
+                <ul>
+                  <li><i class="fa-solid fa-circle-check text-success"></i> <strong>2-Inch Margin:</strong> Dual inner side margins for stress-free future alterations.</li>
+                  <li><i class="fa-solid fa-circle-check text-success"></i> <strong>Pure Cotton Lining:</strong> Breathable, pre-shrunk cotton lining in every garment.</li>
+                  <li><i class="fa-solid fa-circle-check text-success"></i> <strong>Video Measurement Call:</strong> Free demo measurement consultation on WhatsApp prior to cutting.</li>
+                  <li><i class="fa-solid fa-circle-check text-success"></i> <strong>Safe Pan-India Transit:</strong> Padded protective garment box packaging.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CUSTOM ORDER BUILDER FORM SECTION -->
+    <section class="section custom-order-section" id="custom-order">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Bespoke Handcrafting</div>
+          <h2 class="section-title">Request a Custom Order</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span></span>
+          </div>
+          <p class="section-subtitle">
+            Need custom couple names for your Sakharpuda, customized Mundavalya color theme matching your Paithani saree, or a special Baby Name Reveal board? Fill in your vision below!
+          </p>
+        </div>
+
+        <div class="custom-order-layout">
+          <!-- Form Side -->
+          <div class="custom-order-card form-side">
+            <div class="card-heading">
+              <i class="fa-solid fa-paintbrush"></i>
+              <div>
+                <h3>Personalization Details</h3>
+                <p>Every piece is customized to your exact ceremony theme.</p>
+              </div>
+            </div>
+
+            <form id="customOrderForm" class="custom-order-form" novalidate>
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="custName">Your Full Name <span class="required">*</span></label>
+                  <input type="text" id="custName" class="form-input" placeholder="e.g. Radhika Deshmukh" required>
+                  <span class="field-error" id="custNameError">Please enter your name.</span>
+                </div>
+                <div class="form-group col-half">
+                  <label for="custPhone">WhatsApp / Mobile Number <span class="required">*</span></label>
+                  <input type="tel" id="custPhone" class="form-input" placeholder="e.g. 98220 XXXXX" required>
+                  <span class="field-error" id="custPhoneError">Please enter a valid 10-digit number.</span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="custProductType">Select Product / Category <span class="required">*</span></label>
+                  <select id="custProductType" class="form-select" required>
+                    <option value="" disabled selected>-- Choose what to customize --</option>
+                    <option value="Ring Platter">Ring Platter (Engagement & Sakharpuda)</option>
+                    <option value="Embroidery Frame">Embroidery Frame (Wedding Hoop & Keepsake)</option>
+                    <option value="Customized Outfits">Customized Outfits (Kurtis & Ethnic Sets)</option>
+                    <option value="Customized Blouses">Customized Blouses (Bridal & Designer Blouses)</option>
+                    <option value="Mundavalya">Mundavalya (Bridal/Groom Set)</option>
+                    <option value="Sakharpuda Collection">Sakharpuda Ring Platter & Thali</option>
+                    <option value="Baby Name Reveal Boards">Baby Name Reveal Board (Namkaran)</option>
+                    <option value="Bashing">Traditional Bashing / Mukut</option>
+                    <option value="Customized Name Banners">Custom Name Banner / Wooden Plaque</option>
+                    <option value="Handmade Bangles">Custom Bridal Chuda & Tode Set</option>
+                    <option value="Oti Chi Potli">Bulk Oti Chi Potli Favor Pouches</option>
+                    <option value="Traditional Decorations and Toran">Custom Entrance Toran</option>
+                  </select>
+                  <span class="field-error" id="custProductTypeError">Please select a product category.</span>
+                </div>
+
+                <div class="form-group col-half">
+                  <label for="custEventDate">Auspicious Occasion Date <span class="required">*</span></label>
+                  <input type="date" id="custEventDate" class="form-input" required>
+                  <span class="field-error" id="custEventDateError">Please choose your event date.</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="custCustomText">Custom Name / Text to Engrave or Weave <span class="required">*</span></label>
+                <input type="text" id="custCustomText" class="form-input" placeholder="e.g. 'Aarav & Tanvi' or 'Shree Swara - 24.11.2026'" required>
+                <span class="field-hint">Specify names, initials, date, or traditional Marathi blessing text.</span>
+                <span class="field-error" id="custCustomTextError">Please enter your custom text or names.</span>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="custQuantity">Quantity Required</label>
+                  <div class="quantity-control-field">
+                    <button type="button" class="qty-btn" id="decCustQty">-</button>
+                    <input type="number" id="custQuantity" class="form-input qty-input" value="1" min="1" max="250">
+                    <button type="button" class="qty-btn" id="incCustQty">+</button>
+                  </div>
+                </div>
+
+                <div class="form-group col-half">
+                  <label for="custBudget">Expected Budget (₹) <span class="optional-tag">(Optional)</span></label>
+                  <div class="budget-input-wrapper">
+                    <span class="budget-currency-symbol">₹</span>
+                    <input type="number" id="custBudget" class="form-input budget-input" placeholder="e.g. 2500" min="100" step="50">
+                  </div>
+                  <span class="field-hint">Helps artisans recommend ideal materials in your range.</span>
+                  <span class="field-error" id="custBudgetError">Please enter a valid amount (minimum ₹100).</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="custCity">Delivery City / Pin Code <span class="required">*</span></label>
+                <input type="text" id="custCity" class="form-input" placeholder="e.g. Pune, 411004" required>
+                <span class="field-error" id="custCityError">Please enter delivery city & pincode.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="custInstructions">Customization Instructions & Special Requests <span class="optional-tag">(Optional)</span></label>
+                <textarea id="custInstructions" class="form-textarea" rows="3" placeholder="Tell us about specific sizes, matching saree colors, flower preferences, or expedited delivery needs..."></textarea>
+                <span class="field-hint">Share details regarding rituals, preferred motifs, fonts, or matching jewelry colors.</span>
+              </div>
+
+              <!-- Upload Reference Photo Field (Optional, Up to 5 images) -->
+              <div class="form-group custom-upload-section">
+                <div class="custom-upload-header">
+                  <label for="custReferenceUpload">
+                    <i class="fa-solid fa-cloud-arrow-up text-gold"></i>
+                    Upload Reference Photo <span class="optional-tag">(Optional)</span>
+                  </label>
+                  <span class="upload-count-badge" id="custUploadCountBadge">0 / 5 Uploaded</span>
+                </div>
+                <span class="field-hint" style="margin-top: -0.2rem; margin-bottom: 0.35rem;">Upload up to 5 reference images (JPG, JPEG, PNG, WEBP) to share your desired design or matching attire.</span>
+
+                <div class="custom-upload-dropzone" id="custFileDropzone" tabindex="0" role="button" aria-label="Upload Reference Photo">
+                  <i class="fa-solid fa-images dropzone-upload-icon"></i>
+                  <div class="dropzone-text-primary">Click to Browse or Drag &amp; Drop Reference Photos</div>
+                  <div class="dropzone-text-secondary">Attach up to 5 images (JPG, JPEG, PNG, WEBP &bull; Max 10MB each)</div>
+                </div>
+
+                <input type="file" id="custReferenceUpload" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple style="display: none;">
+                <input type="file" id="custReplaceUpload" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" style="display: none;">
+
+                <div class="cust-previews-container" id="custPreviewsContainer"></div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-gold btn-lg btn-block" id="submitCustomOrderBtn">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Custom Order Request
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Preview & Artisan Process Side -->
+          <div class="custom-order-card preview-side">
+            <div class="card-heading">
+              <i class="fa-solid fa-eye"></i>
+              <div>
+                <h3>Live Customization Summary</h3>
+                <p>Instant visual preview of your custom request</p>
+              </div>
+            </div>
+
+            <div class="live-preview-box">
+              <div class="preview-badge">Custom Craft Specimen</div>
+              <div class="preview-mockup-wrapper">
+                <div class="preview-plate" id="previewPlate">
+                  <div class="preview-ornament-top">✤ ✤ ✤</div>
+                  <div class="preview-custom-text" id="previewDisplayTitle">Your Custom Names Here</div>
+                  <div class="preview-category-tag" id="previewDisplayCategory">Mundavalya / Sakharpuda</div>
+                  <div class="preview-ornament-bottom">~ Handmade with Love ~</div>
+                </div>
+              </div>
+
+              <div class="preview-details-list">
+                <div class="preview-detail-row">
+                  <span class="label">Client Name:</span>
+                  <span class="value" id="previewDisplayName">Guest Customer</span>
+                </div>
+                <div class="preview-detail-row">
+                  <span class="label">Occasion Date:</span>
+                  <span class="value" id="previewDisplayDate">To be specified</span>
+                </div>
+                <div class="preview-detail-row">
+                  <span class="label">Quantity:</span>
+                  <span class="value" id="previewDisplayQty">1 Unit</span>
+                </div>
+                <div class="preview-detail-row">
+                  <span class="label">Delivery City:</span>
+                  <span class="value" id="previewDisplayCity">To be specified</span>
+                </div>
+                <div class="preview-detail-row">
+                  <span class="label">Expected Budget:</span>
+                  <span class="value text-gold" id="previewDisplayBudget">Not specified</span>
+                </div>
+                <div class="preview-detail-row">
+                  <span class="label">Estimated Craft Time:</span>
+                  <span class="value text-gold">3 - 5 Business Days</span>
+                </div>
+              </div>
+
+              <!-- Live Customization Instructions Preview Box -->
+              <div class="preview-instructions-box" id="previewInstructionsBox" style="display: none;">
+                <strong><i class="fa-solid fa-pen-nib"></i> Artisan Notes:</strong>
+                <span id="previewDisplayInstructions">Standard craftsmanship</span>
+              </div>
+
+              <!-- Live Uploaded Photos Preview Strip -->
+              <div class="preview-photos-section" id="previewPhotosSection">
+                <div class="preview-photos-header">
+                  <span><i class="fa-regular fa-images text-gold"></i> Reference Photos</span>
+                  <span class="preview-photos-count" id="previewPhotosCount">0 Photos</span>
+                </div>
+                <div class="preview-photos-strip" id="previewPhotosStrip">
+                  <span class="preview-no-photos">No reference photos uploaded yet (Optional)</span>
+                </div>
+              </div>
+
+              <div class="artisan-promise-box">
+                <div class="promise-icon"><i class="fa-solid fa-award"></i></div>
+                <div class="promise-text">
+                  <strong>The Bhami Assurance:</strong> We share high-definition craft photos and video updates on WhatsApp prior to safe packaging.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ABOUT US / OUR STORY SECTION -->
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-story-content">
+            <div class="section-eyebrow">Our Roots & Heritage</div>
+            <h2 class="section-title">The Story Behind Bhami Craft Boutique</h2>
+            <div class="section-divider-ornament left-aligned">
+              <span></span>
+              <i class="fa-solid fa-feather-pointed"></i>
+              <span></span>
+            </div>
+
+            <p class="story-lead">
+              Born in Pune, the cultural capital of Maharashtra, <strong>Bhami Craft Boutique</strong> was founded with a sacred purpose: to celebrate, revive, and elevate the timeless beauty of Maharashtrian wedding and celebration traditions.
+            </p>
+
+            <p class="story-body">
+              Every Mundavalya is stringed with authentic Basra-style pearls, every Sakharpuda tray is hand-embossed in rich velvet with Mor-Pankh motifs, every Name Reveal Board is lovingly laser-carved, and each <strong>Customized Outfit & Bridal Blouse</strong> is meticulously stitched by master tailors. We believe that family milestones are sacred, and the artifacts blessed during these rituals should be heirloom treasures to cherish forever.
+            </p>
+
+            <div class="artisan-pillars">
+              <div class="pillar-item">
+                <div class="pillar-icon"><i class="fa-solid fa-hands-praying"></i></div>
+                <div>
+                  <h4>Ritual Authenticity</h4>
+                  <p>True to Maharashtrian Vedic traditions and auspicious colors.</p>
+                </div>
+              </div>
+
+              <div class="pillar-item">
+                <div class="pillar-icon"><i class="fa-solid fa-heart-circle-check"></i></div>
+                <div>
+                  <h4>100% Women-Led Crafting</h4>
+                  <p>Empowering skilled female artisans across Pune, Solapur & Kolhapur.</p>
+                </div>
+              </div>
+
+              <div class="pillar-item">
+                <div class="pillar-icon"><i class="fa-solid fa-gift"></i></div>
+                <div>
+                  <h4>Heirloom Packaging</h4>
+                  <p>Protected in keepsake boxes designed to preserve your memories.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-visuals">
+            <div class="story-image-collage">
+              <div class="collage-main">
+                <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=700&q=80" alt="Artisan handcrafting Maharashtrian wedding accessories" class="collage-img main-img">
+              </div>
+              <div class="collage-floating-box">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Handcrafted with Devotion in Maharashtra</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. TESTIMONIALS SECTION -->
+    <section class="section testimonials-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Stories of Joy</div>
+          <h2 class="section-title">Words from Our Families</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-heart"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              “The Basra pearl Mundavalya and custom Solapuri Bashing we ordered for our wedding in Satara were breathtaking! Everyone asked where we got them from. The Maroon & Gold finish matched my Nauvari saree flawlessly!”
+            </p>
+            <div class="client-meta">
+              <div class="client-avatar">SD</div>
+              <div class="client-info">
+                <strong>Shraddha & Digvijay</strong>
+                <span>Wedding in Satara, MH</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              “The custom bridal blouse stitched for my Sakharpuda was a masterwork! The Paithani peacock border along the elbow sleeves and the deep back latkans gave it a truly royal Maharani look.”
+            </p>
+            <div class="client-meta">
+              <div class="client-avatar">AK</div>
+              <div class="client-info">
+                <strong>Aniket & Kalyani</strong>
+                <span>Sakharpuda Ceremony, Mumbai</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="rating-stars">★★★★★</div>
+            <p class="testimonial-text">
+              “The wooden cradle Name Reveal board for our baby daughter’s Barse ceremony brought tears of joy to our grandparents. Thank you Bhami Craft Boutique for making it so special!”
+            </p>
+            <div class="client-meta">
+              <div class="client-avatar">PJ</div>
+              <div class="client-info">
+                <strong>Pooja & Jitesh Joshi</strong>
+                <span>Barse / Namkaran, Pune</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FAQ SECTION -->
+    <section class="section faq-section" id="faq">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Have Questions?</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-circle-question"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="faq-accordion" id="faqAccordion">
+          <!-- FAQ 1 -->
+          <div class="faq-item active">
+            <button class="faq-question" aria-expanded="true">
+              <span>How far in advance should I order for my wedding or ceremony?</span>
+              <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </button>
+            <div class="faq-answer">
+              <p>For standard catalog items, we dispatch within 2 business days. For customized Mundavalya, Sakharpuda trays, and customized Name Boards or tailored outfits, we recommend placing your order at least <strong>7 to 10 days</strong> before your event date to allow sufficient time for artisan handcrafting and express courier transit.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I customize the color theme to match my Nauvari / Paithani saree?</span>
+              <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, absolutely! You can share your saree or ceremony color palette through our Custom Order form or demo WhatsApp. Our artisans and tailors will coordinate the pearl accents, velvet base, and zari dori accordingly.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do custom measurements work for Customized Outfits and Blouses?</span>
+              <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </button>
+            <div class="faq-answer">
+              <p>You can choose standard ready-to-wear sizes (XS to XXL) or select "Custom Measurements" in our outfit builder to input your exact bust, waist, hip, and length measurements. All our stitched garments include 2 inches of inner allowance for future alterations.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How are delicate items like Bashing and Toran packed for shipping?</span>
+              <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Every fragile item is packed in reinforced multi-layer rigid boxes with custom-fitted thermocol cushioning and waterproof bubble sleeves to ensure your traditional heirlooms arrive in mint condition.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this an active commercial website or a demo?</span>
+              <i class="fa-solid fa-chevron-down faq-arrow"></i>
+            </button>
+            <div class="faq-answer">
+              <p><strong>This is a portfolio demonstration website</strong> built for Bhami Craft Boutique to showcase UI/UX design, interactive catalogue filtering, local storage cart management, custom tailoring customization, and bespoke order calculations. No live financial transactions or personal data storage are performed.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CONTACT & DEMO DELIVERY SECTION -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-header text-center">
+          <div class="section-eyebrow">Connect With Us</div>
+          <h2 class="section-title">Get in Touch with Our Studio</h2>
+          <div class="section-divider-ornament">
+            <span></span>
+            <i class="fa-solid fa-envelope-open-text"></i>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Info Card -->
+          <div class="contact-info-card">
+            <h3>Bhami Craft Boutique Studio</h3>
+            <p class="contact-sub">We’d love to hear from you and help bring your celebration dreams to life.</p>
+
+            <ul class="contact-meta-list">
+              <li>
+                <div class="meta-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div>
+                  <strong>Boutique Studio (Demo Address)</strong>
+                  <span>Shivaji Nagar, FC Road Heritage Lane, Pune, Maharashtra 411005</span>
+                </div>
+              </li>
+              <li>
+                <div class="meta-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div>
+                  <strong>WhatsApp Boutique Helpline</strong>
+                  <span>+91 98XXX XXXXX (Demo Placeholder)</span>
+                </div>
+              </li>
+              <li>
+                <div class="meta-icon"><i class="fa-brands fa-instagram"></i></div>
+                <div>
+                  <strong>Instagram Community</strong>
+                  <span>@bhami_craftboutiqe</span>
+                </div>
+              </li>
+              <li>
+                <div class="meta-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                <div>
+                  <strong>Demo Delivery Information</strong>
+                  <span>Pan-India Courier (Simulated 3-5 business days across India)</span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="social-channels">
+              <span class="social-label">Follow our creations:</span>
+              <div class="social-icons">
+                <a href="#contact" class="social-btn demo-link" title="Instagram (Demo)"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#contact" class="social-btn demo-link" title="WhatsApp (Demo)"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#contact" class="social-btn demo-link" title="Pinterest (Demo)"><i class="fa-brands fa-pinterest"></i></a>
+                <a href="#contact" class="social-btn demo-link" title="Facebook (Demo)"><i class="fa-brands fa-facebook"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form Card -->
+          <div class="contact-form-card">
+            <h3>Send a Message</h3>
+            <form id="contactForm" class="contact-form" novalidate>
+              <div class="form-group">
+                <label for="contactName">Your Name <span class="required">*</span></label>
+                <input type="text" id="contactName" class="form-input" placeholder="e.g. Meera Patil" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-half">
+                  <label for="contactEmail">Email Address <span class="required">*</span></label>
+                  <input type="email" id="contactEmail" class="form-input" placeholder="e.g. meera@example.com" required>
+                </div>
+                <div class="form-group col-half">
+                  <label for="contactPhone">Phone Number <span class="required">*</span></label>
+                  <input type="tel" id="contactPhone" class="form-input" placeholder="e.g. 98220 XXXXX" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contactSubject">Subject / Inquiring About</label>
+                <input type="text" id="contactSubject" class="form-input" placeholder="e.g. Customized Kurti availability for Dec 15th">
+              </div>
+
+              <div class="form-group">
+                <label for="contactMessage">Your Message <span class="required">*</span></label>
+                <textarea id="contactMessage" class="form-textarea" rows="4" placeholder="How can we assist with your special celebration or custom tailoring?" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-gold btn-block" id="contactWhatsAppBtn">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Chat on WhatsApp
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Boutique Footer -->
+  <footer class="boutique-footer">
+    <div class="container footer-content">
+      <div class="footer-grid">
+        <div class="footer-col brand-col">
+          <div class="brand-identity">
+            <span class="brand-name">BHAMI CRAFT BOUTIQUE</span>
+            <span class="brand-subline">Maharashtrian Traditional Crafts</span>
+          </div>
+          <p class="footer-tagline">“Handmade with Love, Made for Your Special Moments.”</p>
+          <p class="footer-summary">
+            Specializing in bespoke wedding accessories, engagement platters, Basra pearl mundavalya, customized outfits, designer blouses, and auspicious keepsakes rooted in authentic Maharashtrian culture.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Popular Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#customized-outfits" class="filter-category-link" data-cat="Customized Outfits">Customized Outfits</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Customized Blouses">Customized Blouses</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Ring Platter">Ring Platter</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Embroidery Frame">Embroidery Frame</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Mundavalya">Mundavalya</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Sakharpuda Collection">Sakharpuda Collection</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Oti Chi Potli">Oti Chi Potli</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Bashing">Bashing & Mukut</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Baby Name Reveal Boards">Baby Reveal Boards</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Customized Name Banners">Name Banners</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Handmade Bangles">Handmade Bangles</a></li>
+            <li><a href="#catalogue" class="filter-category-link" data-cat="Traditional Decorations and Toran">Toran & Decor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#categories">Product Categories</a></li>
+            <li><a href="#catalogue">Boutique Catalogue</a></li>
+            <li><a href="#customized-outfits">Customized Outfits Studio</a></li>
+            <li><a href="#custom-order">Custom Order Request</a></li>
+            <li><a href="#about">Our Artisan Story</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+            <li><a href="#contact">Contact & Studio</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col newsletter-col">
+          <h4>Boutique Gazette</h4>
+          <p>Join our newsletter for new bridal collection previews and auspicious festive tips.</p>
+          <form id="newsletterForm" class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" id="newsletterEmail" placeholder="Enter your email" required aria-label="Newsletter email">
+              <button type="submit" class="btn btn-gold btn-sm">Subscribe</button>
+            </div>
+            <span class="newsletter-demo-note">Demo subscription — no spam ever.</span>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-inner">
+          <p>&copy; 2026 Bhami Craft Boutique. All rights reserved. <strong>DEMO WEBSITE FOR DEMONSTRATION PURPOSES ONLY.</strong></p>
+          <p class="footer-crafted-by">Crafted with traditional elegance & devotion.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS & DRAWERS ================= -->
+
+  <!-- 1. Shopping Cart Drawer / Modal -->
+  <div class="cart-drawer-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping Cart Drawer" role="dialog" aria-modal="true">
+    <div class="cart-header">
+      <div class="cart-header-title">
+        <i class="fa-solid fa-bag-shopping text-gold"></i>
+        <h3>Your Shopping Bag</h3>
+        <span class="cart-badge-pill" id="cartTotalItemsCount">0 items</span>
+      </div>
+      <button class="cart-close-btn" id="cartCloseBtn" aria-label="Close cart">&times;</button>
+    </div>
+
+    <!-- Empty Cart Screen -->
+    <div class="cart-empty-view" id="cartEmptyView">
+      <div class="empty-icon-wrap">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </div>
+      <h4>Your Bag is Empty</h4>
+      <p>Discover our authentic Maharashtrian handmade creations and add your favorites to get started.</p>
+      <button class="btn btn-gold" id="startShoppingBtn">
+        <i class="fa-solid fa-store"></i> Explore Catalogue
+      </button>
+    </div>
+
+    <!-- Cart Items View -->
+    <div class="cart-content-view" id="cartContentView" style="display: none;">
+      <div class="cart-items-scroll" id="cartItemsList">
+        <!-- Rendered by script.js -->
+      </div>
+
+      <div class="cart-summary-footer">
+        <!-- Coupon Code Promo Box -->
+        <div class="cart-coupon-box">
+          <div class="coupon-input-group">
+            <input type="text" id="couponCodeInput" placeholder="Promo code (Try: BHAMI10 or UTSAV)">
+            <button type="button" id="applyCouponBtn" class="btn btn-sm btn-outline-gold">Apply</button>
+          </div>
+          <div class="coupon-status" id="couponStatusMessage"></div>
+        </div>
+
+        <div class="cart-calculations">
+          <div class="calc-row">
+            <span>Subtotal:</span>
+            <span class="calc-val" id="cartSubtotal">₹0</span>
+          </div>
+          <div class="calc-row discount-row" id="cartDiscountRow" style="display: none;">
+            <span>Special Festive Discount:</span>
+            <span class="calc-val text-success" id="cartDiscountVal">- ₹0</span>
+          </div>
+          <div class="calc-row">
+            <span>Protective Packaging & Shipping:</span>
+            <span class="calc-val text-success" id="cartShippingVal">FREE</span>
+          </div>
+          <div class="calc-row total-row">
+            <span>Estimated Total:</span>
+            <span class="calc-val-total" id="cartGrandTotal">₹0</span>
+          </div>
+          <p class="calc-note"><i class="fa-solid fa-shield-halved"></i> 100% Transit Safe Demo Order</p>
+        </div>
+
+        <div class="cart-actions-footer">
+          <button class="btn btn-gold btn-block btn-lg" id="proceedToCheckoutBtn">
+            <i class="fa-solid fa-lock"></i> Proceed to Demo Checkout
+          </button>
+          <button class="btn-clear-cart" id="clearCartBtn">
+            <i class="fa-regular fa-trash-can"></i> Empty Bag
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. Product Details Quick View Modal -->
+  <div class="modal-backdrop" id="productModalBackdrop"></div>
+  <div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalProductTitle">
+    <button class="modal-close-btn" id="closeProductModal" aria-label="Close product details">&times;</button>
+    <div class="product-modal-inner" id="productModalContent">
+      <!-- Dynamic product details injected via script.js -->
+    </div>
+  </div>
+
+  <!-- 3. Demo Checkout Modal -->
+  <div class="modal-backdrop" id="checkoutModalBackdrop"></div>
+  <div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+    <button class="modal-close-btn" id="closeCheckoutModal" aria-label="Close checkout">&times;</button>
+    <div class="checkout-modal-header">
+      <div class="brand-emblem-sm">
+        <i class="fa-solid fa-gem text-gold"></i>
+      </div>
+      <div>
+        <h3 id="checkoutModalTitle">Simulated Demo Checkout</h3>
+        <p class="text-muted">No real payment will be charged. This is an interactive demo.</p>
+      </div>
+    </div>
+
+    <div class="checkout-modal-body">
+      <div class="checkout-columns">
+        <!-- Customer Delivery Details Form -->
+        <div class="checkout-form-column">
+          <h4><i class="fa-solid fa-location-dot text-gold"></i> Shipping Destination</h4>
+          <form id="demoCheckoutForm" novalidate>
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="chkName">Full Name <span class="required">*</span></label>
+                <input type="text" id="chkName" class="form-input" placeholder="e.g. Aditi Kulkarni" required>
+              </div>
+              <div class="form-group col-half">
+                <label for="chkPhone">Phone / WhatsApp <span class="required">*</span></label>
+                <input type="tel" id="chkPhone" class="form-input" placeholder="e.g. 98221 XXXXX" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="chkAddress">Street Address / Landmark <span class="required">*</span></label>
+              <input type="text" id="chkAddress" class="form-input" placeholder="House/Flat No., Society, Road" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-half">
+                <label for="chkCity">City <span class="required">*</span></label>
+                <input type="text" id="chkCity" class="form-input" placeholder="e.g. Pune" required>
+              </div>
+              <div class="form-group col-half">
+                <label for="chkPincode">Pin Code <span class="required">*</span></label>
+                <input type="text" id="chkPincode" class="form-input" placeholder="e.g. 411004" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Select Demo Payment Simulation</label>
+              <div class="payment-options-grid">
+                <label class="payment-method-card active">
+                  <input type="radio" name="demoPayment" value="upi" checked>
+                  <i class="fa-solid fa-qrcode"></i>
+                  <span>Demo UPI QR</span>
+                </label>
+                <label class="payment-method-card">
+                  <input type="radio" name="demoPayment" value="cod">
+                  <i class="fa-solid fa-hand-holding-dollar"></i>
+                  <span>Demo COD</span>
+                </label>
+                <label class="payment-method-card">
+                  <input type="radio" name="demoPayment" value="netbanking">
+                  <i class="fa-solid fa-building-columns"></i>
+                  <span>Demo NetBanking</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-gold btn-block btn-lg" id="confirmPlaceOrderBtn">
+              <i class="fa-solid fa-check-circle"></i> Place Demo Order (<span id="chkOrderTotalBtn">₹0</span>)
+            </button>
+          </form>
+        </div>
+
+        <!-- Order Items Summary Column -->
+        <div class="checkout-summary-column">
+          <h4><i class="fa-solid fa-receipt text-gold"></i> Order Summary</h4>
+          <div class="checkout-summary-items" id="checkoutSummaryItems">
+            <!-- Injected by script.js -->
+          </div>
+          <div class="checkout-calc-card">
+            <div class="calc-row">
+              <span>Subtotal:</span>
+              <span id="chkSubtotal">₹0</span>
+            </div>
+            <div class="calc-row" id="chkDiscountRow" style="display: none;">
+              <span>Discount:</span>
+              <span class="text-success" id="chkDiscount">₹0</span>
+            </div>
+            <div class="calc-row">
+              <span>Shipping:</span>
+              <span class="text-success">FREE</span>
+            </div>
+            <div class="calc-row total-row">
+              <span>Total Payable:</span>
+              <span class="calc-val-total" id="chkGrandTotal">₹0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Order Confirmation Receipt Modal -->
+  <div class="modal-backdrop" id="receiptModalBackdrop"></div>
+  <div class="receipt-modal" id="receiptModal" role="dialog" aria-modal="true">
+    <div class="receipt-success-badge">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <h3 class="receipt-title">Demo Order Placed Successfully!</h3>
+    <p class="receipt-sub">Thank you for exploring Bhami Craft Boutique demo. Your simulated celebration order has been logged.</p>
+    
+    <div class="receipt-box" id="receiptBoxDetails">
+      <!-- Injected by script.js with sample order ID and items -->
+    </div>
+
+    <div class="receipt-actions">
+      <button class="btn btn-gold btn-block" id="closeReceiptBtn">
+        <i class="fa-solid fa-bag-shopping"></i> Continue Exploring Boutique
+      </button>
+      <button class="btn btn-outline btn-block" id="receiptViewAdminBtn" style="margin-top: 0.6rem; border-color: var(--gold); color: var(--primary); background: var(--cream);">
+        <i class="fa-solid fa-clipboard-list text-gold"></i> View in Admin Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- 5. Outfit Customization Confirmation Receipt Modal -->
+  <div class="modal-backdrop" id="outfitReceiptModalBackdrop"></div>
+  <div class="receipt-modal" id="outfitReceiptModal" role="dialog" aria-modal="true">
+    <div class="receipt-success-badge">
+      <i class="fa-solid fa-scissors"></i>
+    </div>
+    <h3 class="receipt-title">Outfit Customization Request Received!</h3>
+    <p class="receipt-sub">Thank you for ordering with Bhami Couture. Your simulated tailoring request has been recorded.</p>
+    
+    <div class="receipt-box" id="outfitReceiptBoxDetails">
+      <!-- Injected dynamically by script.js -->
+    </div>
+
+    <div class="receipt-actions">
+      <button class="btn btn-gold btn-block" id="closeOutfitReceiptBtn">
+        <i class="fa-solid fa-vest"></i> Continue Exploring Boutique
+      </button>
+      <button class="btn btn-outline btn-block" id="outfitReceiptViewAdminBtn" style="margin-top: 0.6rem; border-color: var(--gold); color: var(--primary); background: var(--cream);">
+        <i class="fa-solid fa-clipboard-list text-gold"></i> View in Admin Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- 6. Artisan Admin Orders Dashboard Modal -->
+  <div class="modal-backdrop" id="adminDashboardBackdrop"></div>
+  <div class="admin-dashboard-modal" id="adminDashboardModal" role="dialog" aria-modal="true" aria-labelledby="adminDashboardTitle">
+    <div class="admin-modal-header">
+      <div class="admin-header-title">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <div>
+          <h3 id="adminDashboardTitle">Artisan Order Dashboard &amp; Inquiries</h3>
+          <p>Real-time customer personalization requests &amp; reference photos</p>
+        </div>
+      </div>
+      <button class="admin-modal-close-btn" id="closeAdminDashboardBtn" aria-label="Close Admin Dashboard">&times;</button>
+    </div>
+
+    <div class="admin-toolbar">
+      <div class="admin-search-wrapper">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Search customer, phone, order ID, product, city...">
+      </div>
+      <div class="admin-filter-tabs">
+        <button class="admin-tab-btn active" data-filter="all">All Orders (<span id="adminTabCountAll">0</span>)</button>
+        <button class="admin-tab-btn" data-filter="custom">Custom Crafts (<span id="adminTabCountCustom">0</span>)</button>
+        <button class="admin-tab-btn" data-filter="outfit">Outfit Studio (<span id="adminTabCountOutfit">0</span>)</button>
+        <button class="admin-tab-btn" data-filter="checkout">Cart Orders (<span id="adminTabCountCheckout">0</span>)</button>
+      </div>
+      <div class="admin-toolbar-actions">
+        <button class="admin-btn-action" id="adminExportJsonBtn" title="Download orders as JSON">
+          <i class="fa-solid fa-download"></i> Export
+        </button>
+        <button class="admin-btn-action" id="adminResetDemoBtn" title="Reset sample demo orders">
+          <i class="fa-solid fa-rotate-right"></i> Reset
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-orders-body" id="adminOrdersBody">
+      <!-- Injected dynamically by script.js -->
+    </div>
+  </div>
+
+  <!-- 7. Image Lightbox Modal for Enlarge View -->
+  <div class="image-lightbox-modal" id="imageLightboxModal" role="dialog" aria-modal="true" aria-label="Reference image full view">
+    <div class="image-lightbox-backdrop" id="imageLightboxBackdrop"></div>
+    <div class="image-lightbox-content">
+      <button class="lightbox-close-btn" id="closeImageLightboxBtn" aria-label="Close photo view">&times;</button>
+      <img id="lightboxImg" class="lightbox-img" src="" alt="Enlarged Reference Preview">
+      <div class="lightbox-caption-bar">
+        <span id="lightboxCaption">Customer Reference Photo</span>
+        <span id="lightboxDimensions"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Script File -->
+  <script src="script.js"></script>
+</body>
+</html>
