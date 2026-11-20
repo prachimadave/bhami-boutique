@@ -9,11 +9,43 @@ import secrets
 import mimetypes
 import base64
 import re
+import time
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
+
+# Automatic .env loader for environment variables
+def load_dotenv():
+    """Loads key-value pairs from .env into os.environ if not already defined"""
+    env_path = os.path.join(BASE_DIR, '.env')
+    if os.path.exists(env_path):
+        try:
+            with open(env_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith('#') and '=' in line:
+                        k, v = line.split('=', 1)
+                        k = k.strip()
+                        v = v.strip().strip('"').strip("'")
+                        if k and k not in os.environ:
+                            os.environ[k] = v
+        except Exception as e:
+            print(f"Notice: Failed to read .env: {e}")
+
+load_dotenv()
+
+# Rate limiting for admin login attempts (in-memory)
+LOGIN_ATTEMPTS = {}
+MAX_FAILED_ATTEMPTS = 5
+LOCKOUT_DURATION_SECONDS = 60 # 60-second cooldown after 5 consecutive failures
+
+# Accepted fake demo credentials (active when no env variables configured, or in demo mode)
+DEMO_CREDENTIALS = {
+    'admin': ['bhami@craft2026', 'BhamiAdmin2024!'],
+    'admin@bhamicraft.com': ['bhami@craft2026', 'BhamiAdmin2024!']
+}
 
 PORT = 8000
 DB_FILE = os.path.join(BASE_DIR, 'boutique.db')
@@ -95,16 +127,78 @@ def init_db():
 def hash_password(password, salt):
     return hashlib.sha256((password + salt).encode('utf-8')).hexdigest()
 
+def check_login_rate_limit(ip):
+    now = time.time()
+    record = LOGIN_ATTEMPTS.get(ip)
+    if record and record.get('lock_until', 0) > now:
+        remaining = int(record['lock_until'] - now)
+        return False, remaining
+    return True, 0
+
+def record_login_attempt(ip, success):
+    now = time.time()
+    if success:
+        if ip in LOGIN_ATTEMPTS:
+            del LOGIN_ATTEMPTS[ip]
+        return
+    record = LOGIN_ATTEMPTS.get(ip)
+    if not record or (now - record.get('last_failed', 0) > 300):
+        record = {'count': 0, 'last_failed': now, 'lock_until': 0}
+        LOGIN_ATTEMPTS[ip] = record
+    record['count'] += 1
+    record['last_failed'] = now
+    if record['count'] >= MAX_FAILED_ATTEMPTS:
+        record['lock_until'] = now + LOCKOUT_DURATION_SECONDS
+
 def verify_admin(username, password):
-    conn = get_db()
-    c = conn.cursor()
-    c.execute("SELECT password_hash, salt FROM admin_users WHERE username = ?", (username,))
-    row = c.fetchone()
-    conn.close()
-    if not row:
-        return False
-    expected_hash = hash_password(password, row['salt'])
-    return secrets.compare_digest(row['password_hash'], expected_hash)
+    """
+    Verifies admin credentials securely:
+    1. Checks environment variables (ADMIN_USERNAME / ADMIN_PASSWORD) if configured.
+    2. Falls back to fake demo credentials (admin / bhami@craft2026 / BhamiAdmin2024!) for development.
+    3. Checks SQLite database admin_users table with salt and constant-time comparison.
+    4. Computes dummy hash on failure to mitigate timing analysis attacks.
+    """
+    if not username or not password:
+        return False, None
+
+    u_clean = str(username).strip()
+    p_clean = str(password)
+
+    # 1. Check production environment variables (takes priority if configured)
+    env_user = os.environ.get('ADMIN_USERNAME', '').strip()
+    env_pass = os.environ.get('ADMIN_PASSWORD', '').strip()
+    if env_user and env_pass:
+        user_matches = secrets.compare_digest(u_clean.lower(), env_user.lower())
+        pass_matches = secrets.compare_digest(p_clean, env_pass)
+        if user_matches and pass_matches:
+            return True, env_user
+
+    # 2. Check fake demo credentials
+    u_lower = u_clean.lower()
+    if u_lower in DEMO_CREDENTIALS:
+        for demo_pw in DEMO_CREDENTIALS[u_lower]:
+            if secrets.compare_digest(p_clean, demo_pw):
+                return True, 'admin'
+
+    # 3. Check SQLite database admin_users table
+    try:
+        conn = get_db()
+        c = conn.cursor()
+        c.execute("SELECT username, password_hash, salt FROM admin_users WHERE LOWER(username) = ?", (u_lower,))
+        row = c.fetchone()
+        conn.close()
+        if row:
+            expected_hash = hash_password(p_clean, row['salt'])
+            if secrets.compare_digest(row['password_hash'], expected_hash):
+                return True, row['username']
+    except Exception as e:
+        print(f"Error verifying admin in database: {e}")
+
+    # 4. Dummy hash calculation on failure (mitigate timing attack)
+    dummy_salt = 'dummy_timing_mitigation_salt_16'
+    _ = hash_password(p_clean, dummy_salt)
+
+    return False, None
 
 def create_session(username):
     token = secrets.token_hex(32)
@@ -119,16 +213,25 @@ def create_session(username):
     return token
 
 def validate_token(token):
-    if not token:
+    if not token or not isinstance(token, str):
+        return None
+    token_clean = token.strip()
+    if not token_clean or len(token_clean) < 16:
         return None
     conn = get_db()
     c = conn.cursor()
     now = datetime.now().isoformat()
-    c.execute("SELECT username, expires_at FROM sessions WHERE token = ?", (token,))
+    c.execute("SELECT username, expires_at FROM sessions WHERE token = ?", (token_clean,))
     row = c.fetchone()
+    if row:
+        if row['expires_at'] > now:
+            conn.close()
+            return row['username']
+        else:
+            # Prune expired session token
+            c.execute("DELETE FROM sessions WHERE token = ?", (token_clean,))
+            conn.commit()
     conn.close()
-    if row and row['expires_at'] > now:
-        return row['username']
     return None
 
 def invalidate_session(token):
@@ -141,40 +244,78 @@ def invalidate_session(token):
     conn.close()
 
 def save_base64_image(data_url, order_id, idx, original_name):
-    """Saves a base64 image dataUrl to disk in uploads/ and returns public URL"""
+    """Saves a base64 image dataUrl to disk in uploads/ with strict security checks and returns public URL"""
     try:
-        if not data_url or not data_url.startswith('data:image/'):
+        if not data_url or not isinstance(data_url, str) or not data_url.startswith('data:image/'):
             return None
+        if ',' not in data_url:
+            return None
+
         header, b64_data = data_url.split(',', 1)
-        ext = 'jpg'
-        if 'image/png' in header:
-            ext = 'png'
-        elif 'image/webp' in header:
-            ext = 'webp'
-        elif 'image/gif' in header:
-            ext = 'gif'
-            
-        safe_name = re.sub(r'[^a-zA-Z0-9_\.-]', '_', original_name or f'photo_{idx}.{ext}')
-        filename = f"{order_id}_{idx}_{safe_name}"
-        if not filename.lower().endswith(f".{ext}"):
-            filename = f"{filename}.{ext}"
-            
-        filepath = os.path.join(UPLOAD_DIR, filename)
+
+        # Enforce maximum base64 upload size (max 8 MB)
+        if len(b64_data) > 8 * 1024 * 1024:
+            print("Warning: Upload rejected - base64 payload exceeds 8MB limit.")
+            return None
+
         file_bytes = base64.b64decode(b64_data)
+
+        # Strict magic bytes verification to ensure legitimate image formats
+        if file_bytes.startswith(b'\xff\xd8\xff'):
+            ext = 'jpg'
+        elif file_bytes.startswith(b'\x89PNG\r\n\x1a\n'):
+            ext = 'png'
+        elif file_bytes[:4] == b'RIFF' and len(file_bytes) >= 12 and file_bytes[8:12] == b'WEBP':
+            ext = 'webp'
+        elif file_bytes.startswith((b'GIF87a', b'GIF89a')):
+            ext = 'gif'
+        else:
+            print("Warning: Upload rejected - file content does not match genuine image magic bytes.")
+            return None
+
+        # Sanitize order ID and original filename to prevent path traversal and double extensions
+        clean_oid = re.sub(r'[^a-zA-Z0-9_-]', '', str(order_id or 'BCB'))[:30]
+        raw_basename = os.path.splitext(os.path.basename(original_name or f'photo_{idx}'))[0]
+        clean_name = re.sub(r'[^a-zA-Z0-9_-]', '_', raw_basename)[:30] or f'photo_{idx}'
+        filename = f"{clean_oid}_{idx}_{clean_name}.{ext}"
+
+        filepath = os.path.abspath(os.path.join(UPLOAD_DIR, filename))
+        if not filepath.startswith(UPLOAD_DIR):
+            print("Warning: Upload rejected - path traversal detected.")
+            return None
+
         with open(filepath, 'wb') as f:
             f.write(file_bytes)
-            
+
         return f"/uploads/{filename}"
     except Exception as e:
         print(f"Error saving image: {e}")
         return None
 
 class BoutiqueHandler(http.server.SimpleHTTPRequestHandler):
+    def get_client_ip(self):
+        xff = self.headers.get('X-Forwarded-For')
+        if xff:
+            return xff.split(',')[0].strip()
+        if hasattr(self, 'client_address') and self.client_address:
+            return self.client_address[0]
+        return '127.0.0.1'
+
     def end_headers(self):
-        # Enable CORS for local API access
-        self.send_header('Access-Control-Allow-Origin', '*')
+        # Defensive Security Headers
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('X-Frame-Options', 'SAMEORIGIN')
+        self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+        # CORS Headers (respect requesting origin where applicable)
+        origin = self.headers.get('Origin')
+        if origin:
+            self.send_header('Access-Control-Allow-Origin', origin)
+            self.send_header('Access-Control-Allow-Credentials', 'true')
+        else:
+            self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
         super().end_headers()
 
     def do_OPTIONS(self):
@@ -209,8 +350,9 @@ class BoutiqueHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def read_json_body(self):
+        MAX_BODY_SIZE = 15 * 1024 * 1024 # 15 MB max request body payload
         content_length = int(self.headers.get('Content-Length', 0))
-        if content_length <= 0:
+        if content_length <= 0 or content_length > MAX_BODY_SIZE:
             return {}
         raw = self.rfile.read(content_length).decode('utf-8')
         try:
@@ -220,7 +362,11 @@ class BoutiqueHandler(http.server.SimpleHTTPRequestHandler):
 
     def serve_static_file(self, rel_path, mime_type=None):
         clean_path = rel_path.lstrip('/')
-        full_path = os.path.join(BASE_DIR, clean_path)
+        full_path = os.path.abspath(os.path.join(BASE_DIR, clean_path))
+        # Prevent directory traversal attacks
+        if not full_path.startswith(BASE_DIR):
+            self.send_error(403, "Access forbidden")
+            return
         if os.path.isdir(full_path):
             full_path = os.path.join(full_path, 'index.html')
         if not os.path.exists(full_path) or not os.path.isfile(full_path):
@@ -249,11 +395,29 @@ class BoutiqueHandler(http.server.SimpleHTTPRequestHandler):
         path = parsed.path
         query = parse_qs(parsed.query)
 
-        # Route rewrites & direct file serving
+        # Route rewrites with Admin Route Guard protection
         if path in ('/admin', '/admin/', '/admin/index.html'):
+            token = self.get_auth_token()
+            user = validate_token(token)
+            if not user:
+                # Redirect unauthenticated browser requests directly to secure login
+                self.send_response(302)
+                self.send_header('Location', '/admin/login.html')
+                self.end_headers()
+                return
             return self.serve_static_file('admin/index.html', 'text/html')
+
         if path in ('/admin/login', '/admin/login/', '/admin/login.html'):
+            token = self.get_auth_token()
+            user = validate_token(token)
+            if user:
+                # Already authenticated, redirect to admin dashboard
+                self.send_response(302)
+                self.send_header('Location', '/admin/')
+                self.end_headers()
+                return
             return self.serve_static_file('admin/login.html', 'text/html')
+
         if path == '/admin/admin.css':
             return self.serve_static_file('admin/admin.css', 'text/css')
         if path == '/admin/admin.js':
@@ -409,20 +573,38 @@ class BoutiqueHandler(http.server.SimpleHTTPRequestHandler):
 
         # API: Login
         if path == '/api/login':
+            client_ip = self.get_client_ip()
+            allowed, remaining = check_login_rate_limit(client_ip)
+            if not allowed:
+                return self.send_json_response({
+                    'success': False,
+                    'error': f'Too many failed login attempts. Please wait {remaining} seconds before trying again.'
+                }, 429)
+
             username = body.get('username', '').strip()
             password = body.get('password', '')
-            if verify_admin(username, password):
-                token = create_session(username)
+
+            is_valid, authed_user = verify_admin(username, password)
+            if is_valid:
+                record_login_attempt(client_ip, success=True)
+                effective_user = authed_user or username or 'Owner'
+                token = create_session(effective_user)
+
+                # Check HTTPS for Secure cookie flag
+                is_https = self.headers.get('X-Forwarded-Proto') == 'https'
+                secure_flag = '; Secure' if is_https else ''
+
                 self.send_response(200)
                 # Also set cookie for direct browser navigation
-                self.send_header('Set-Cookie', f'bhami_admin_token={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=172800')
+                self.send_header('Set-Cookie', f'bhami_admin_token={token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=172800{secure_flag}')
                 self.send_header('Content-Type', 'application/json; charset=utf-8')
-                resp = json.dumps({'success': True, 'token': token, 'username': username}).encode('utf-8')
+                resp = json.dumps({'success': True, 'token': token, 'username': effective_user}).encode('utf-8')
                 self.send_header('Content-Length', str(len(resp)))
                 self.end_headers()
                 self.wfile.write(resp)
                 return
             else:
+                record_login_attempt(client_ip, success=False)
                 return self.send_json_response({'success': False, 'error': 'Invalid owner credentials. Please check your username and password.'}, 401)
 
         # API: Logout

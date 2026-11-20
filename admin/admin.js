@@ -438,7 +438,7 @@
               <i class="fa-solid fa-phone"></i>
               <span>${escapeHtml(order.customer_phone)}</span>
               ${phoneDigits ? `
-                <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="btn-wa-chat" title="Open direct WhatsApp conversation with customer">
+                <a href="${escapeHtml(waLink)}" target="_blank" rel="noopener noreferrer" class="btn-wa-chat" title="Open direct WhatsApp conversation with customer">
                   <i class="fa-brands fa-whatsapp"></i> Contact Customer
                 </a>
               ` : ''}
@@ -491,16 +491,19 @@
             ${photos.length > 0 ? `
               <div class="photos-gallery">
                 ${photos.map((p, idx) => {
-                  const src = p.url || p.dataUrl;
+                  const rawSrc = p.url || p.dataUrl || '';
+                  const safeSrc = (typeof rawSrc === 'string' && (rawSrc.startsWith('/uploads/') || rawSrc.startsWith('http://') || rawSrc.startsWith('https://') || rawSrc.startsWith('data:image/')))
+                    ? escapeHtml(rawSrc)
+                    : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23eee" width="100" height="100"/></svg>';
                   const name = p.name || `Photo #${idx + 1}`;
                   return `
-                    <div class="photo-thumb-wrapper" data-src="${src}" data-name="${escapeHtml(name)}" data-order="${order.id}">
-                      <img src="${src}" alt="${escapeHtml(name)}" class="photo-thumb-img" loading="lazy">
+                    <div class="photo-thumb-wrapper" data-src="${safeSrc}" data-name="${escapeHtml(name)}" data-order="${escapeHtml(order.id)}">
+                      <img src="${safeSrc}" alt="${escapeHtml(name)}" class="photo-thumb-img" loading="lazy">
                       <div class="photo-thumb-hover">
                         <i class="fa-solid fa-magnifying-glass-plus"></i>
                         <span>Enlarge</span>
                       </div>
-                      <button type="button" class="photo-download-btn" title="Download this photo" data-src="${src}" data-name="${escapeHtml(name)}" data-order="${order.id}">
+                      <button type="button" class="photo-download-btn" title="Download this photo" data-src="${safeSrc}" data-name="${escapeHtml(name)}" data-order="${escapeHtml(order.id)}">
                         <i class="fa-solid fa-download"></i>
                       </button>
                     </div>
@@ -618,7 +621,7 @@
                   <td>
                     <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
                       ${waLink ? `
-                        <a href="${waLink}" target="_blank" class="btn-wa-chat" style="padding:0.25rem 0.55rem; font-size:0.75rem;">
+                        <a href="${escapeHtml(waLink)}" target="_blank" class="btn-wa-chat" style="padding:0.25rem 0.55rem; font-size:0.75rem;">
                           <i class="fa-brands fa-whatsapp"></i> Chat
                         </a>
                       ` : ''}

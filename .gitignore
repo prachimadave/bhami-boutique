@@ -1,3 +1,60 @@
+# ==============================================================================
+# Bhami Craft Boutique - Git Ignore Configuration
+# ==============================================================================
+
+# 1. Environment & Secret Credentials
+.env
+.env.*
+!.env.example
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+secrets/
+
+# 2. Local Database & Storage Files (Orders, Enquiries, Sessions)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+boutique.db
+
+# 3. Customer Uploads & Private Photos
+uploads/
+uploads/**
+
+# 4. Python Bytecode, Caches & Virtual Environments
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# 5. Runtime Logs & Diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 6. Operating System Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# 7. Editor & IDE Settings
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
