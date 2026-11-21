@@ -88,11 +88,6 @@
           <span class="badge" id="cartBadgeCount">0</span>
         </button>
 
-        <button class="action-btn admin-btn" id="adminDashboardBtn" onclick="window.location.href='../admin/'" aria-label="Open Artisan Admin Dashboard" title="Artisan Admin Orders Dashboard">
-          <i class="fa-solid fa-clipboard-list"></i>
-          <span class="admin-badge" id="adminBadgeCount">0</span>
-        </button>
-
         <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false">
           <span class="hamburger-bar"></span>
           <span class="hamburger-bar"></span>
@@ -145,7 +140,6 @@
         <li><a href="#about" class="mobile-nav-link"><i class="fa-solid fa-feather-pointed"></i> Our Story</a></li>
         <li><a href="#faq" class="mobile-nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
         <li><a href="#contact" class="mobile-nav-link"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
-        <li><a href="#" class="mobile-nav-link" id="mobileAdminLink" href="../admin/"><i class="fa-solid fa-clipboard-check text-gold"></i> Admin Dashboard <span class="badge" id="mobileAdminBadgeCount">0</span></a></li>
       </ul>
       <div class="drawer-footer">
         <p class="drawer-phone"><i class="fa-brands fa-whatsapp"></i> +91 98XXX XXXXX (Demo)</p>
@@ -1691,9 +1685,6 @@
       <button class="btn btn-gold btn-block" id="closeReceiptBtn">
         <i class="fa-solid fa-bag-shopping"></i> Continue Exploring Boutique
       </button>
-      <button class="btn btn-outline btn-block" id="receiptViewAdminBtn" style="margin-top: 0.6rem; border-color: var(--gold); color: var(--primary); background: var(--cream);">
-        <i class="fa-solid fa-clipboard-list text-gold"></i> View in Admin Dashboard
-      </button>
     </div>
   </div>
 
@@ -1714,53 +1705,10 @@
       <button class="btn btn-gold btn-block" id="closeOutfitReceiptBtn">
         <i class="fa-solid fa-vest"></i> Continue Exploring Boutique
       </button>
-      <button class="btn btn-outline btn-block" id="outfitReceiptViewAdminBtn" style="margin-top: 0.6rem; border-color: var(--gold); color: var(--primary); background: var(--cream);">
-        <i class="fa-solid fa-clipboard-list text-gold"></i> View in Admin Dashboard
-      </button>
     </div>
   </div>
 
-  <!-- 6. Artisan Admin Orders Dashboard Modal -->
-  <div class="modal-backdrop" id="adminDashboardBackdrop"></div>
-  <div class="admin-dashboard-modal" id="adminDashboardModal" role="dialog" aria-modal="true" aria-labelledby="adminDashboardTitle">
-    <div class="admin-modal-header">
-      <div class="admin-header-title">
-        <i class="fa-solid fa-clipboard-check"></i>
-        <div>
-          <h3 id="adminDashboardTitle">Artisan Order Dashboard &amp; Inquiries</h3>
-          <p>Real-time customer personalization requests &amp; reference photos</p>
-        </div>
-      </div>
-      <button class="admin-modal-close-btn" id="closeAdminDashboardBtn" aria-label="Close Admin Dashboard">&times;</button>
-    </div>
-
-    <div class="admin-toolbar">
-      <div class="admin-search-wrapper">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="adminSearchInput" class="admin-search-input" placeholder="Search customer, phone, order ID, product, city...">
-      </div>
-      <div class="admin-filter-tabs">
-        <button class="admin-tab-btn active" data-filter="all">All Orders (<span id="adminTabCountAll">0</span>)</button>
-        <button class="admin-tab-btn" data-filter="custom">Custom Crafts (<span id="adminTabCountCustom">0</span>)</button>
-        <button class="admin-tab-btn" data-filter="outfit">Outfit Studio (<span id="adminTabCountOutfit">0</span>)</button>
-        <button class="admin-tab-btn" data-filter="checkout">Cart Orders (<span id="adminTabCountCheckout">0</span>)</button>
-      </div>
-      <div class="admin-toolbar-actions">
-        <button class="admin-btn-action" id="adminExportJsonBtn" title="Download orders as JSON">
-          <i class="fa-solid fa-download"></i> Export
-        </button>
-        <button class="admin-btn-action" id="adminResetDemoBtn" title="Reset sample demo orders">
-          <i class="fa-solid fa-rotate-right"></i> Reset
-        </button>
-      </div>
-    </div>
-
-    <div class="admin-orders-body" id="adminOrdersBody">
-      <!-- Injected dynamically by script.js -->
-    </div>
-  </div>
-
-  <!-- 7. Image Lightbox Modal for Enlarge View -->
+  <!-- 6. Image Lightbox Modal for Enlarge View -->
   <div class="image-lightbox-modal" id="imageLightboxModal" role="dialog" aria-modal="true" aria-label="Reference image full view">
     <div class="image-lightbox-backdrop" id="imageLightboxBackdrop"></div>
     <div class="image-lightbox-content">

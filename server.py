@@ -41,10 +41,11 @@ LOGIN_ATTEMPTS = {}
 MAX_FAILED_ATTEMPTS = 5
 LOCKOUT_DURATION_SECONDS = 60 # 60-second cooldown after 5 consecutive failures
 
-# Accepted fake demo credentials (active when no env variables configured, or in demo mode)
+# Default demo credentials for local testing and presentation
+# Future production credentials should be configured via environment variables (ADMIN_USERNAME and ADMIN_PASSWORD)
 DEMO_CREDENTIALS = {
-    'admin': ['bhami@craft2026', 'BhamiAdmin2024!'],
-    'admin@bhamicraft.com': ['bhami@craft2026', 'BhamiAdmin2024!']
+    'admin': 'bhami@craft2026',
+    'admin@bhamicraft.com': 'bhami@craft2026'
 }
 
 PORT = 8000
@@ -111,15 +112,23 @@ def init_db():
         expires_at TEXT NOT NULL
     )''')
     
-    # Initialize default admin if not exists
-    c.execute("SELECT username FROM admin_users WHERE username = 'admin'")
+    # Initialize admin user account (environment variables take precedence if provided)
+    env_user = os.environ.get('ADMIN_USERNAME', '').strip()
+    env_pass = os.environ.get('ADMIN_PASSWORD', '').strip()
+    target_user = env_user if (env_user and env_pass) else 'admin'
+    target_pass = env_pass if (env_user and env_pass) else 'bhami@craft2026'
+
+    c.execute("SELECT username FROM admin_users WHERE LOWER(username) = ?", (target_user.lower(),))
     if not c.fetchone():
         salt = secrets.token_hex(16)
-        pw_hash = hashlib.sha256(('bhami@craft2026' + salt).encode('utf-8')).hexdigest()
+        pw_hash = hash_password(target_pass, salt)
         now = datetime.now().isoformat()
         c.execute("INSERT INTO admin_users (username, password_hash, salt, role, created_at) VALUES (?, ?, ?, ?, ?)",
-                  ('admin', pw_hash, salt, 'Owner', now))
-        print("Initialized default admin owner account (admin / bhami@craft2026)")
+                  (target_user, pw_hash, salt, 'Owner', now))
+        if env_user and env_pass:
+            print(f"Initialized production admin owner account from environment ({target_user})")
+        else:
+            print("Initialized default demo admin owner account (admin / bhami@craft2026)")
         
     conn.commit()
     conn.close()
@@ -153,10 +162,11 @@ def record_login_attempt(ip, success):
 def verify_admin(username, password):
     """
     Verifies admin credentials securely:
-    1. Checks environment variables (ADMIN_USERNAME / ADMIN_PASSWORD) if configured.
-    2. Falls back to fake demo credentials (admin / bhami@craft2026 / BhamiAdmin2024!) for development.
-    3. Checks SQLite database admin_users table with salt and constant-time comparison.
-    4. Computes dummy hash on failure to mitigate timing analysis attacks.
+    1. Checks production environment variables (ADMIN_USERNAME / ADMIN_PASSWORD / ADMIN_PASSWORD_HASH).
+    2. Checks SQLite database admin_users table (salted SHA-256 hash with constant-time comparison).
+    3. Falls back to demo credentials (admin / bhami@craft2026) when running in demo/development mode
+       (or unless ALLOW_DEMO_LOGIN is explicitly set to 'false').
+    4. Computes dummy hash on failure to eliminate timing side-channel attacks.
     """
     if not username or not password:
         return False, None
@@ -167,20 +177,22 @@ def verify_admin(username, password):
     # 1. Check production environment variables (takes priority if configured)
     env_user = os.environ.get('ADMIN_USERNAME', '').strip()
     env_pass = os.environ.get('ADMIN_PASSWORD', '').strip()
-    if env_user and env_pass:
+    env_hash = os.environ.get('ADMIN_PASSWORD_HASH', '').strip()
+    env_salt = os.environ.get('ADMIN_SALT', '').strip()
+    allow_demo = os.environ.get('ALLOW_DEMO_LOGIN', '').strip().lower()
+
+    if env_user:
         user_matches = secrets.compare_digest(u_clean.lower(), env_user.lower())
-        pass_matches = secrets.compare_digest(p_clean, env_pass)
-        if user_matches and pass_matches:
-            return True, env_user
+        if user_matches:
+            if env_pass and secrets.compare_digest(p_clean, env_pass):
+                return True, env_user
+            if env_hash:
+                computed_hash = hash_password(p_clean, env_salt) if env_salt else hashlib.sha256(p_clean.encode('utf-8')).hexdigest()
+                if secrets.compare_digest(computed_hash, env_hash):
+                    return True, env_user
 
-    # 2. Check fake demo credentials
+    # 2. Check SQLite database admin_users table
     u_lower = u_clean.lower()
-    if u_lower in DEMO_CREDENTIALS:
-        for demo_pw in DEMO_CREDENTIALS[u_lower]:
-            if secrets.compare_digest(p_clean, demo_pw):
-                return True, 'admin'
-
-    # 3. Check SQLite database admin_users table
     try:
         conn = get_db()
         c = conn.cursor()
@@ -190,9 +202,19 @@ def verify_admin(username, password):
         if row:
             expected_hash = hash_password(p_clean, row['salt'])
             if secrets.compare_digest(row['password_hash'], expected_hash):
-                return True, row['username']
+                # Reject demo credentials if demo login is explicitly disallowed in production
+                is_demo_account = (u_lower in DEMO_CREDENTIALS)
+                if not is_demo_account or allow_demo != 'false':
+                    return True, row['username']
     except Exception as e:
         print(f"Error verifying admin in database: {e}")
+
+    # 3. Check demo credentials fallback (active in demo mode or unless explicitly disabled)
+    if allow_demo != 'false':
+        if u_lower in DEMO_CREDENTIALS:
+            demo_pw = DEMO_CREDENTIALS[u_lower]
+            if secrets.compare_digest(p_clean, demo_pw):
+                return True, 'admin'
 
     # 4. Dummy hash calculation on failure (mitigate timing attack)
     dummy_salt = 'dummy_timing_mitigation_salt_16'
